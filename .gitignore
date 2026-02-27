@@ -1,0 +1,57 @@
+# Ignore everything by default
+*
+
+# Keep this file itself tracked
+!.gitignore
+
+# Reinclude config files
+!mcp.json
+!AGENTS.md
+!AGENTS.assistant.md
+
+# Track all personal agents
+!agents/
+!agents/**
+
+# Track only selected personal skills
+!skills/
+skills/*
+
+!skills/bash-efficiency/
+!skills/bash-efficiency/**
+
+!skills/convex/
+!skills/convex/**
+
+!skills/data-viz/
+!skills/data-viz/**
+
+!skills/documentation/
+!skills/documentation/**
+
+!skills/external-patterns/
+!skills/external-patterns/**
+
+!skills/cinematic-landing/
+!skills/cinematic-landing/**
+
+!skills/init-project/
+!skills/init-project/**
+
+!skills/prd/
+!skills/prd/**
+
+!skills/react-flow/
+!skills/react-flow/**
+
+!skills/tech-impl-plan/
+!skills/tech-impl-plan/**
+
+!skills/testing/
+!skills/testing/**
+
+!skills/three-js/
+!skills/three-js/**
+
+!skills/visual-qa/
+!skills/visual-qa/**
