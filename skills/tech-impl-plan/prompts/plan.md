@@ -10,23 +10,32 @@ Copy and paste this into a new session to start a coding implementation planning
 0d. Study `@docs/MEMORY.md` for durable technical constraints.
 0e. Search the codebase before assuming anything is missing.
 
-1. Planning mode only: produce mini-PRD context + technical implementation plan for the next smallest executable slice.
-2. Include a High-Level Change Preview:
-   - architecture delta (ASCII or mermaid),
-   - stubbed interface/pseudocode snippets for critical touchpoints,
-   - before -> after behavior bullets.
-3. Include touched files/interfaces, dependency order, validation strategy, and rollback notes if needed.
-4. Add user stories and concrete acceptance tests with explicit observable behavior.
-5. Convert to execution todos; final todos must include required testing and verification tasks.
-6. Add an Execution Assist Matrix:
-   - in-session skills and why,
-   - delegated subagents only when justified,
-   - expected artifact from each delegated step.
-7. Apply delegation guardrails:
+1. Planning mode only: produce a brief, teachable plan for the next smallest executable slice.
+2. Optimize for approval clarity. Use the minimum detail needed for a human to understand and approve.
+3. Structure the output as:
+   - Plan Snapshot
+   - What Changes
+   - How It Works
+   - Why This Is The Minimal And Most Efficient Change
+   - Blast Radius
+   - Proof
+   - Approval
+4. In `What Changes`, explain why this exists, before -> after behavior, and the user-visible outcome in simple language.
+5. In `How It Works`, include touched files, the role of each changed or new file, and a data-flow diagram when introducing new files or a new code path.
+6. Include one dry run of a realistic scenario so a human can follow the flow step by step.
+7. In `Why This Is The Minimal And Most Efficient Change`, do investigative work first, then explicitly state:
+   - what existing codepaths or modules were investigated,
+   - what will be reused,
+   - what will be deleted, avoided, or left alone,
+   - why a smaller change would not be sufficient,
+   - why each new file or abstraction is necessary.
+8. In `Blast Radius`, name affected systems, main risks, and rollback or recovery notes if needed.
+9. In `Proof`, give 2-5 concrete scenarios with exact automated or manual checks. Prefer full scenarios over generic test categories.
+10. Apply delegation guardrails:
    - docs-only/markdown-only/rule-text changes -> no visual QA delegation,
-   - UI behavior/layout/styling changes -> include `visual-qa` expected spec artifact path.
-8. Add one Debt/Optimization Insight from touched code surface (low-risk improvement + rationale).
-9. Add review/testing criteria and final wow gate todos.
-10. End with clear yes/no handoff.
+   - UI behavior/layout/styling changes -> include `visual-qa`,
+   - otherwise say `Not needed`.
+11. If the task is too large, do not write one large plan. Split it into smaller tickets or phases and plan only the next slice.
+12. End with a clear yes/no handoff.
 
 IMPORTANT: Plan only. Do not implement.

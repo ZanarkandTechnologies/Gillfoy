@@ -1,13 +1,13 @@
 ---
 name: tech-impl-plan
-version: 1.0.0
-description: "Coding-focused implementation planning skill. Produces mini-PRD context, technical implementation steps, concrete user-observable test cases, strict testing todos, and yes/no execution handoff."
+version: 1.1.0
+description: "Concise implementation planning skill. Produces a brief, teachable plan with why/what/how, data flow, blast radius, concrete proof scenarios, efficiency checks against existing code, and a clear yes/no handoff."
 allowed-tools: Read, Glob, Grep
 ---
 
 # Tech Impl Plan Skill
 
-Use this for software implementation planning. It is coding-first and testing-detailed.
+Use this for software implementation planning. Optimize for human approval clarity, not exhaustiveness.
 
 ## Core Prompt Wording (Use Literally)
 
@@ -20,22 +20,20 @@ Use this for software implementation planning. It is coding-first and testing-de
 ## Workflow (First-Load Contract)
 
 1. Gather coding context and choose the next smallest executable slice.
-2. Write mini-PRD context for the selected slice.
-3. Map spec implications and affected technical surfaces.
-4. Add a high-level change preview (architecture delta + stubbed touchpoints + before/after behavior).
-5. Draft ordered implementation plan with dependencies.
-6. Add user-story-linked acceptance tests with concrete, observable behavior.
-7. Convert plan into strict execution todos including required tests.
-8. Add execution assist matrix (skills + conditional subagent delegation).
-9. Add one debt/inefficiency insight in touched code surface.
-10. Run review criteria and final wow gate.
-11. Return yes/no handoff and stop before implementation.
+2. Explain the change in simple terms: why it exists, what changes, and what the user gets.
+3. Show how it works with touched files, file roles, and a data-flow diagram when new files or paths are introduced.
+4. Dry-run one realistic scenario through the planned flow so a human can follow it step by step.
+5. Call out blast radius, risks, and rollback or recovery notes if needed.
+6. Add concrete proof scenarios with observable outcomes and the exact tests or checks that validate them.
+7. Investigate the existing codepath and explain why this is the minimal and most efficient change that fits the current system.
+8. If the task is too large, stop and split it into smaller tickets or phases instead of producing one large plan.
+9. Return a clear yes/no handoff and stop before implementation.
 
 ## Core Decision Branches
 
-- **High ambiguity/risk** -> include deeper spec decomposition before implementation steps.
-- **Low ambiguity/risk** -> proceed with concise spec mapping and implementation plan.
-- **Task too large** -> split into phases and plan only next slice.
+- **High ambiguity/risk** -> spend more space on teachability, dry run, and risk control; keep implementation detail brief.
+- **Low ambiguity/risk** -> keep the plan short and direct.
+- **Task too large** -> split into smaller tickets or phases and plan only the next slice.
 
 ## Delegation Guardrails (Mandatory)
 
@@ -48,30 +46,52 @@ Use this for software implementation planning. It is coding-first and testing-de
 
 1. Do not implement; this skill is plan-only.
 2. Do not write generic tests; tests must be user-observable and concrete.
-3. Do not ship plan without testing todos, change preview, and debt insight.
+3. Do not invent new files, abstractions, or systems without proving why existing code cannot carry the change.
 
 ## Outcome Contract
 
 Each output must include:
 
-1. Mini-PRD context
-2. High-Level Change Preview:
-   - architecture delta (ASCII or mermaid)
-   - stubbed interfaces or pseudocode for critical touchpoints
-   - before -> after behavior bullets
-3. Technical implementation plan
-4. User stories
-5. Concrete acceptance tests (step-by-step expected behavior)
-6. Execution todo list with required testing tasks
-7. Execution Assist Matrix:
-   - in-session skills and why
-   - delegated subagents (if needed), linked skill, and one-line reason
-   - expected artifact from each delegated step
-8. Debt/Optimization Insight:
-   - one concrete inefficiency in touched surface
-   - low-risk improvement recommendation and why now
-9. Review/testing criteria + final wow gate
-10. Yes/no approval handoff
+1. Plan Snapshot:
+   - change
+   - why now
+   - confidence
+   - size: small / medium / too big, needs split
+2. What Changes:
+   - before -> after behavior
+   - user-visible outcome
+3. How It Works:
+   - touched files
+   - role of each new or changed file
+   - data-flow diagram when introducing new files or a new path
+   - one dry run in simple language
+4. Why This Is The Minimal And Most Efficient Change:
+   - existing code investigated
+   - what will be reused, avoided, deleted, or left unchanged
+   - why a smaller change would not be sufficient
+   - justification for each new file or abstraction
+5. Blast Radius:
+   - affected systems
+   - main risks
+   - rollback or recovery note when relevant
+6. Proof:
+   - 2-5 concrete scenarios
+   - exact automated or manual checks for each scenario
+7. Delegation Note:
+   - skills or subagents only if needed
+   - `Not needed` if none
+8. Approval Handoff:
+   - ready or not ready
+   - what happens after approval
+
+## Efficiency Rules
+
+- Investigate the relevant existing code before proposing structural changes.
+- Prefer reusing and extending existing modules over adding new ones.
+- Prefer deleting or simplifying code over layering new abstractions on top.
+- Every new file must have a one-line purpose.
+- Every new abstraction must explain why the existing shape is insufficient.
+- If the plan cannot explain the fit with existing code, it is not ready for approval.
 
 ## Prompt Entry
 

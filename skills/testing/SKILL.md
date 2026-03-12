@@ -1,8 +1,3 @@
-/**
- * @fileoverview Testing index skill and domain references.
- * @invariants Link to domain testing refs and keep workflow concise.
- * @deps None
- */
 ---
 name: testing
 version: 1.1.0

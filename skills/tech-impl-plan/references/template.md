@@ -1,113 +1,80 @@
 # Tech Implementation Plan Template
 
-## Mini-PRD Context
+## Plan Snapshot
 
-- **Goal:**
-- **User Outcome:**
-- **Constraints:**
-- **Risks:**
-- **Success Criteria:**
+- **Change:**
+- **Why now:**
+- **Confidence:**
+- **Size:** `small` / `medium` / `too big, needs split`
 
-## High-Level Change Preview
+## What Changes
 
-- **Architecture Delta (ASCII or Mermaid):**
+- **Before:**
+- **After:**
+- **User-visible outcome:**
+
+## How It Works
+
+- **Touched files:**
+- **New or changed file roles:**
+  - `path/to/file.ts`: one-line role
+  - `path/to/other.ts`: one-line role
+- **Data flow:** include when introducing new files or a new path
 
 ```text
-[Current]
-  A -> B
-[Planned]
-  A -> C -> B
+User action
+  -> file A (receives input)
+  -> file B (transforms / decides)
+  -> file C (persists / renders)
+  -> visible result
 ```
 
-- **Stubbed Touchpoints (interfaces/pseudocode):**
+- **Dry run:**
+  1. User does X
+  2. File/module Y receives it
+  3. Decision or transformation Z happens
+  4. Result is rendered, returned, or stored
 
-```ts
-// Example only; adapt to touched surfaces
-export function performAction(input: Input): Output {
-  // step 1
-  // step 2
-}
-```
+## Why This Is The Minimal And Most Efficient Change
 
-- **Before -> After Behavior:**
+- **Investigated existing code:**
+- **Reuse:** what existing code will be extended or reused
+- **Do not add:** what code, abstraction, or file should be avoided
+- **Delete or simplify:** any code that should be removed or flattened
+- **Why not smaller:** why a smaller change would fail or be incomplete
+- **Justification for new files or abstractions:**
 
-  - Before:
-  - After:
+## Blast Radius
 
-## User Stories
+- **Affected systems:**
+- **Main risks:**
+- **Rollback or recovery note:**
 
-- As a [user], I want [action], so that [benefit].
-- As a [user], I want [action], so that [benefit].
+## Proof
 
-## Technical Implementation Plan
-
-- **Scope (this slice only):**
-- **Touched Files/Interfaces/Systems:**
-- **Dependency Order:**
-  1. Step 1
-  2. Step 2
-  3. Step 3
-- **Validation Strategy:**
-- **Rollback/Safety Notes:**
-
-## Acceptance Tests (Concrete, User-Observable)
-
-- **Test Case 1**
-  - Given:
-  - When:
-  - Then:
-  - Observable assertion:
-- **Test Case 2**
-  - Given:
-  - When:
-  - Then:
-  - Observable assertion:
+- **Scenario 1**
+  - Steps:
+  - Expected result:
+  - How we test it:
+- **Scenario 2**
+  - Steps:
+  - Expected result:
+  - How we test it:
 
 Example style:
 
-- When I log in, I should see a big apple.
-- When I click Enter, it opens a panel asking for information about my week.
+- I create a new project and immediately see the simpler approval-friendly plan format.
+- I review a plan that adds a new file and can see exactly what that file does in the data-flow section.
+- I review a plan for a large change and the planner splits it into smaller tickets instead of dumping one giant plan.
 
-## Execution Todo List (Mandatory)
+## Delegation Note
 
-- [ ] Implement Step 1
-- [ ] Implement Step 2
-- [ ] Implement Step 3
-- [ ] Run required tests for Test Case 1
-- [ ] Run required tests for Test Case 2
-- [ ] Verify observable assertions manually or via automation
+- **Skills or subagents:** `Not needed` unless justified
+- **Why:**
+- **Expected artifact:**
 
-## Execution Assist Matrix
+## Approval
 
-- **In-Session Skills**
-  - `skill-name`: why needed for this slice
-- **Delegated Subagents**
-  - `subagent-name` + linked skill: one-line justification
-  - Expected artifact:
-- **Delegation Guardrail Check**
-  - Docs/markdown/rule-text only? If yes -> `visual-qa: Not needed`
-  - UI layout/styling/interaction changed? If yes -> `visual-qa` artifact path:
-
-## Debt/Optimization Insight
-
-- **Observed inefficiency in touched surface:**
-- **Low-risk improvement recommendation:**
-- **Why now:**
-
-## Review/Test Criteria
-
-- **Correctness:** does this solve the right problem?
-- **Completeness:** are dependencies and edge cases covered?
-- **Usability:** do users get clear expected behavior?
-- **Observability:** are outcomes directly measurable/visible?
-- **Risk Control:** can we safely roll back or recover?
-
-## Final Wow Gate
-
-- [ ] Will this make the user happy given their user story?
-- [ ] What would make it better?
-- [ ] Can I implement that improvement now to wow them?
-
-## Approval Handoff
-
-Say exactly what is prepared and ask for yes/no approval to execute.
+- **Ready to implement:** yes / no
+- **Next step after approval:**
+- **If not ready, split into:**
