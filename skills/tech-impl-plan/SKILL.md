@@ -7,7 +7,7 @@ allowed-tools: Read, Glob, Grep
 
 # Tech Impl Plan Skill
 
-Use this for software implementation planning. Optimize for human approval clarity, not exhaustiveness.
+Use this for software implementation planning. Optimize for human approval clarity, not exhaustiveness. Plan only enough for the next commit.
 
 ## Core Prompt Wording (Use Literally)
 
@@ -20,20 +20,22 @@ Use this for software implementation planning. Optimize for human approval clari
 ## Workflow (First-Load Contract)
 
 1. Gather coding context and choose the next smallest executable slice.
-2. Explain the change in simple terms: why it exists, what changes, and what the user gets.
-3. Show how it works with touched files, file roles, and a data-flow diagram when new files or paths are introduced.
-4. Dry-run one realistic scenario through the planned flow so a human can follow it step by step.
-5. Call out blast radius, risks, and rollback or recovery notes if needed.
-6. Add concrete proof scenarios with observable outcomes and the exact tests or checks that validate them.
+2. Decide whether the request fits in one commit. If not, stop and ask the user whether to split it into multiple plans.
+3. Reintroduce the current system in simple terms before describing the change.
+4. Explain only the variables that change, then show the difference between current and planned behavior.
+5. Show how it works with touched files, file roles, and a Mermaid data-flow diagram when new files or paths are introduced. Use ASCII only for very small trivial flows.
+6. Dry-run one realistic scenario through the planned flow so a human can follow it step by step.
 7. Investigate the existing codepath and explain why this is the minimal and most efficient change that fits the current system.
-8. If the task is too large, stop and split it into smaller tickets or phases instead of producing one large plan.
-9. Return a clear yes/no handoff and stop before implementation.
+8. Call out blast radius, risks, and rollback or recovery notes if needed.
+9. Add concrete proof scenarios with observable outcomes and the exact tests or checks that validate them.
+10. If the plan is too long for easy chat review, write it to a markdown file and return a short chat summary with the file path.
+11. Return a clear yes/no handoff and stop before implementation.
 
 ## Core Decision Branches
 
 - **High ambiguity/risk** -> spend more space on teachability, dry run, and risk control; keep implementation detail brief.
 - **Low ambiguity/risk** -> keep the plan short and direct.
-- **Task too large** -> split into smaller tickets or phases and plan only the next slice.
+- **Task too large** -> ask the user whether to split into multiple plans; only plan the next slice after confirmation.
 
 ## Delegation Guardrails (Mandatory)
 
@@ -46,7 +48,7 @@ Use this for software implementation planning. Optimize for human approval clari
 
 1. Do not implement; this skill is plan-only.
 2. Do not write generic tests; tests must be user-observable and concrete.
-3. Do not invent new files, abstractions, or systems without proving why existing code cannot carry the change.
+3. Do not dump a multi-commit design into chat. Stop, split, and ask first.
 
 ## Outcome Contract
 
@@ -56,33 +58,38 @@ Each output must include:
    - change
    - why now
    - confidence
-   - size: small / medium / too big, needs split
-2. What Changes:
+   - size: one commit / needs split
+2. Current System:
+   - simple explanation of how it works today
+3. What Changes:
+   - variables changing in the current system
    - before -> after behavior
    - user-visible outcome
-3. How It Works:
+4. How It Works:
    - touched files
    - role of each new or changed file
-   - data-flow diagram when introducing new files or a new path
+   - Mermaid data-flow diagram when introducing new files or a new path
    - one dry run in simple language
-4. Why This Is The Minimal And Most Efficient Change:
+5. Why This Is The Minimal And Most Efficient Change:
    - existing code investigated
    - what will be reused, avoided, deleted, or left unchanged
    - why a smaller change would not be sufficient
    - justification for each new file or abstraction
-5. Blast Radius:
+6. Blast Radius:
    - affected systems
    - main risks
    - rollback or recovery note when relevant
-6. Proof:
+7. Proof:
    - 2-5 concrete scenarios
    - exact automated or manual checks for each scenario
-7. Delegation Note:
+8. Delegation Note:
    - skills or subagents only if needed
    - `Not needed` if none
-8. Approval Handoff:
+9. Approval Handoff:
    - ready or not ready
    - what happens after approval
+10. Output Mode:
+   - if long, write the plan to a markdown file and return the path plus a short summary
 
 ## Efficiency Rules
 
@@ -92,6 +99,7 @@ Each output must include:
 - Every new file must have a one-line purpose.
 - Every new abstraction must explain why the existing shape is insufficient.
 - If the plan cannot explain the fit with existing code, it is not ready for approval.
+- If the work spans multiple commits, do not fully plan all of them in one pass.
 
 ## Prompt Entry
 

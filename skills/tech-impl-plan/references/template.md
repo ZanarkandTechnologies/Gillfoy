@@ -5,10 +5,16 @@
 - **Change:**
 - **Why now:**
 - **Confidence:**
-- **Size:** `small` / `medium` / `too big, needs split`
+- **Size:** `one commit` / `needs split`
+
+## Current System
+
+- **Today, in simple terms:**
+- **Key moving parts that matter for this change:**
 
 ## What Changes
 
+- **Variables changing in the current system:**
 - **Before:**
 - **After:**
 - **User-visible outcome:**
@@ -19,14 +25,14 @@
 - **New or changed file roles:**
   - `path/to/file.ts`: one-line role
   - `path/to/other.ts`: one-line role
-- **Data flow:** include when introducing new files or a new path
+- **Data flow:** include a Mermaid diagram when introducing new files or a new path
 
-```text
-User action
-  -> file A (receives input)
-  -> file B (transforms / decides)
-  -> file C (persists / renders)
-  -> visible result
+```mermaid
+flowchart TD
+    A[User action] --> B[file A<br>receives input]
+    B --> C[file B<br>transforms / decides]
+    C --> D[file C<br>persists / renders]
+    D --> E[Visible result]
 ```
 
 - **Dry run:**
@@ -78,3 +84,7 @@ Example style:
 - **Ready to implement:** yes / no
 - **Next step after approval:**
 - **If not ready, split into:**
+
+## Output Mode
+
+- **If this plan is long:** write it to a markdown file and return the file path with a short chat summary
