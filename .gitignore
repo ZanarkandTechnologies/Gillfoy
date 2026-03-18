@@ -61,3 +61,6 @@ skills/*
 
 !skills/runtime-debugging/
 !skills/runtime-debugging/**
+
+!skills/commit-message/
+!skills/commit-message/**
