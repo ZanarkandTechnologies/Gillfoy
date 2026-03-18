@@ -70,7 +70,7 @@ write_file_if_missing() {
   fi
 
   mkdir -p "$(dirname "$dest")"
-  printf "%s" "$content" > "$dest"
+  printf "%b" "$content" > "$dest"
   echo "Wrote: $dest"
 }
 
@@ -85,10 +85,18 @@ mkdir -p "${TARGET_DIR}/docs/specs"
 write_file_if_missing "${TARGET_DIR}/docs/prd.md" "# PRD\n\n## Problem / Context\n\n## Audience\n\n## JTBD\n\n## SLC Slice\n\n## Goals\n\n## Non-Goals\n\n## Constraints\n\n## Risks\n\n## Backpressure\n"
 write_file_if_missing "${TARGET_DIR}/docs/HISTORY.md" "# HISTORY\n\nFormat:\nYYYY-MM-DD HH:mm Z | TYPE | MEM-#### | tags | text\n\n"
 write_file_if_missing "${TARGET_DIR}/docs/MEMORY.md" "# MEMORY\n\nCurated durable constraints promoted from HISTORY.\n\n"
-write_file_if_missing "${TARGET_DIR}/docs/progress.md" "# Progress Plan\n\n## Slice Summary\n\n## Ticket Board\n\n"
+write_file_if_missing "${TARGET_DIR}/docs/TROUBLES.md" "# TROUBLES\n\nAppend-only log for repeated failures, user corrections, and preventable misses.\n\nFormat:\nYYYY-MM-DD HH:mm Z | area,tags | request | miss | correction | prevention\n\nPromote only durable lessons from here into docs/MEMORY.md or the relevant skill/contract.\n\n"
+copy_file "${REF_DIR}/TASTE_TEMPLATE.md" "${TARGET_DIR}/docs/TASTE.md"
+
+mkdir -p "${TARGET_DIR}/tickets/todo" "${TARGET_DIR}/tickets/review" "${TARGET_DIR}/tickets/building" "${TARGET_DIR}/tickets/done" "${TARGET_DIR}/tickets/templates"
+copy_file "${SKILL_DIR}/../../tickets/README.md" "${TARGET_DIR}/tickets/README.md"
+copy_file "${SKILL_DIR}/../../tickets/INDEX.md" "${TARGET_DIR}/tickets/INDEX.md"
+copy_file "${SKILL_DIR}/../../tickets/templates/ticket.md" "${TARGET_DIR}/tickets/templates/ticket.md"
 
 echo ""
 echo "Done."
 echo "Next:"
 echo "  - Fill in PROJECT_RULES.md and AGENTS.md."
-echo "  - Use prd + spec-to-ticket skills to author docs/specs and docs/progress.md."
+echo "  - Refine docs/TASTE.md so UI tickets and QA share one visual doctrine."
+echo "  - Use docs/TROUBLES.md for repeated misses; promote recurring lessons back into the system."
+echo "  - Use prd + spec-to-ticket skills to author docs/specs and create tickets/todo/*."

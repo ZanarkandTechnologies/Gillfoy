@@ -18,9 +18,12 @@ This file is loaded every loop. Keep it operational and project-specific.
 
 - PRD: `docs/prd.md`
 - Specs: `docs/specs/*`
-- Plan: `docs/progress.md`
 - History: `docs/HISTORY.md`
 - Memory: `docs/MEMORY.md`
+- Troubles: `docs/TROUBLES.md`
+- Taste: `docs/TASTE.md`
+- Tickets: `tickets/todo/*`, `tickets/review/*`, `tickets/building/*`, `tickets/done/*`
+- Ticket index: `tickets/INDEX.md`
 
 ## Context First (Always)
 
@@ -51,3 +54,5 @@ This file is loaded every loop. Keep it operational and project-specific.
 
 - Don’t assume not implemented: search first.
 - Prefer local patterns, then docs, then external examples.
+- Update ticket state, blockers, and spawned follow-ups in the ticket file as work progresses.
+- If the same failure or user correction happens more than once, append a short entry to `docs/TROUBLES.md` with the miss, the correction, and the prevention idea.

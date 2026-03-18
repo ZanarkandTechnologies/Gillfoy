@@ -12,7 +12,8 @@ This file defines the project-specific technical rules, tech stack, and conventi
 ## 📁 Folder Structure
 - `src/`: Main source code
 - `tests/`: Test files
-- `docs/`: Canonical project state (`prd.md`, `specs/*`, `progress.md`, `HISTORY.md`, `MEMORY.md`)
+- `docs/`: Canonical project state (`prd.md`, `specs/*`, `HISTORY.md`, `MEMORY.md`, `TASTE.md`, `TROUBLES.md`)
+- `tickets/`: Filesystem board (`todo/`, `review/`, `building/`, `done/`, `templates/`)
 - `...`: [Other key directories]
 
 ## 📜 Conventions
@@ -34,4 +35,3 @@ This file defines the project-specific technical rules, tech stack, and conventi
 # Build project
 [command]
 ```
-
