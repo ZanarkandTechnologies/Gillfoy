@@ -35,3 +35,4 @@ agent-browser state load test-results/auth.json
 - Always include artifact paths in `docs/research/qa-testing/YYYY-MM-DD_visual-qa.md`.
 - If the UI is hard to assert (canvas/video/timeline), add stable selectors (`data-testid`) or expose critical state text in DOM.
 - Keep final report shape aligned with `../SKILL.md`: `Expected UI Spec -> Observed Snapshot Report -> Diff Report -> Fix Plan`.
+- If the ticket does not declare the screens/states clearly enough to compare, stop and report underspecified QA before doing deeper browser exploration.
