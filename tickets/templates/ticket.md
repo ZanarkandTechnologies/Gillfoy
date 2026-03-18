@@ -32,6 +32,7 @@ This block exists so build and QA do not have to guess how to open, stabilize, i
 -->
 
 - Open:
+- Test hook:
 - Stabilize:
 - Inspect:
 - Key screens/states:

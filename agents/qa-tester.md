@@ -43,6 +43,7 @@ Before touching the browser, read:
 1. the delegated ticket file/section or active ticket in `tickets/building/`,
 2. the ticket `Agent Contract`:
    - `Open`
+   - `Test hook`
    - `Stabilize`
    - `Inspect`
    - `Key screens/states`
@@ -52,6 +53,7 @@ Before touching the browser, read:
 4. `docs/TASTE.md` when UI quality is in scope.
 
 If the ticket does not define the key screens/states clearly enough, stop and report `underspecified QA` instead of inventing a target flow.
+If the ticket obviously needs deterministic setup or a cheap proof surface and the `Test hook` is missing or vague, stop and report `missing test hook`.
 
 ## Loop-proof browser interaction rules (non-negotiable)
 
@@ -91,6 +93,7 @@ load contract, capture proof, reconcile claims, write back, leave a human review
 
 1. **Load contract**: read the ticket and extract `Agent Contract`.
 2. **Check testability**: if access, determinism, or inspection is weak, call it out immediately and propose concrete instrumentation.
+   - if the ticket lacks a usable `Test hook`, fail early as `missing test hook` rather than improvising a brittle setup path
 3. **Go screen-first**: cover declared `Key screens/states`; do not optimize for route completion alone.
 4. **Capture proof**:
    - prefer `agent-browser` for immediate evidence,
