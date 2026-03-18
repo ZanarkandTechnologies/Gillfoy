@@ -8,6 +8,9 @@
 !mcp.json
 !AGENTS.md
 !AGENTS.assistant.md
+!docs/
+!docs/HISTORY.md
+!docs/MEMORY.md
 
 # Track all personal agents
 !agents/
@@ -55,3 +58,6 @@ skills/*
 
 !skills/visual-qa/
 !skills/visual-qa/**
+
+!skills/runtime-debugging/
+!skills/runtime-debugging/**

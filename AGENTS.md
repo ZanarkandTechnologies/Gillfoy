@@ -32,6 +32,7 @@ Detailed planning format, implementation sequencing, and review runbooks live in
 * `skills/tech-impl-plan` for planning output structure.
 * `skills/prd` for requirement shaping when needed.
 * `skills/spec-to-ticket` for slice-to-ticket conversion when needed.
+* `skills/runtime-debugging` for reproducible bugs, flaky failures, regressions, and runtime investigations that need evidence before a fix.
 * `skills/visual-qa` only when UI surface changed.
 * `skills/code-review` for final quality review.
 
@@ -70,6 +71,7 @@ You will usually be tasked with either planning or execution.
 Flow:
 
 * Build according to the approved plan.
+* Use `runtime-debugging` before speculative fixes when the bug is reproducible but the cause is not obvious from reading code.
 * Test, then run visual QA workflow only if UI changed.
 * Run review workflow before completion.
 
@@ -202,12 +204,14 @@ Delegation is conditional, not default. Use one-layer delegation only when it ma
 
 ### Required triggers
 
+* Reproducible runtime bug, flaky failure, regression, performance issue, or root-cause investigation where code reading alone is insufficient -> include `runtime-debugging`. See `MEM-0001`.
 * UI layout/interaction/visual behavior changed -> include `visual-qa`.
 * Broad cross-module exploration needed -> use `explore`.
 * Final implementation quality sweep -> use `code-review`.
 
 ### Anti-triggers
 
+* Obvious stack-trace or straightforward error with a clear direct fix -> do not force `runtime-debugging`.
 * Docs-only, markdown-only, or rule-text updates -> do not run `visual-qa`.
 * Small local edits with clear scope -> do not delegate unnecessarily.
 
