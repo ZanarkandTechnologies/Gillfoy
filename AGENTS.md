@@ -172,6 +172,11 @@ Major logic files should start with the standard header block:
 
 Use only when it materially improves outcome.
 
+<!--
+Delegation should be ticket-file-first.
+The delegated agent should receive the ticket path as the primary contract and use chat only for a short execution note.
+-->
+
 Required:
 
 - repro/runtime bug w/ unclear cause -> `runtime-debugging`
@@ -191,6 +196,15 @@ If a plan delegates, include:
 - skill
 - one-line why
 - expected artifact
+- exact ticket file path
+- required write-back target in that ticket
+
+Delegation protocol:
+
+- create or select the ticket first
+- pass the ticket path/reference to the delegated agent
+- keep the freeform prompt short and secondary to the ticket
+- require the delegated agent to reconcile progress back into that same ticket
 
 If none: `Not needed`.
 

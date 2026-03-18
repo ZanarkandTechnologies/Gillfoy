@@ -38,7 +38,7 @@ This block exists so build and QA do not have to guess how to open, stabilize, i
 - Key screens/states:
 - Taste refs:
 - Expected artifacts:
-- Delegate with:
+- Delegate with: delegated agent/skill + ticket path/section + expected artifact + write-back target
 
 ## Evidence Checklist
 

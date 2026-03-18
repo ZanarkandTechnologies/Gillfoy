@@ -54,6 +54,12 @@ Requirements:
   - whether proof/risk/rollback are concrete enough,
   - any fixes made before handoff.
 - `Delegation: Not needed` unless justified.
+- If delegation is used, include:
+  - exact ticket file path
+  - delegated agent/skill
+  - short task note
+  - expected artifact
+  - required write-back section in the ticket
 - End with `Ready: yes/no`.
 - Include `Ticket Move`:
   - where the ticket should live after planning,
