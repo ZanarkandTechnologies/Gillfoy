@@ -1,158 +1,155 @@
-# `AGENTS.md` (Code Contract)
+# `AGENTS.md`
 
-> Repo-wide contract rules. Module-level `AGENTS.md` files can be stricter. More specific rules win.
+Repo contract. More specific `AGENTS.md` wins.
 
----
+<!--
+Hot-path contract for equipped agents.
+Keep this file terse: embedded flow, guardrails, and state-machine rules only.
+Detailed workflow mechanics belong in skills.
+-->
 
-## -1) Definition of Done (Enforced Before Merge)
+## System Map
 
-A task is not complete until all applicable items pass:
+<!--
+Duplicated here on purpose.
+Equipped agents may load AGENTS.md without carrying README.md, so the minimum system flow must live here too.
+-->
 
-* Plan exists for feature/refactor work and follows `skills/tech-impl-plan` output contract.
-* Tests are written and passing.
-* TypeScript strict passes (no `any`).
-* Lint and format checks are clean.
-* `docs/HISTORY.md` is updated.
-* Durable decisions are promoted to `docs/MEMORY.md`.
-* Major logic files include the required header block.
-* New invariants are logged and referenced (`MEM-####`).
-* Review loop is completed (UI review only when UI changed).
-* Changes are pushed to GitHub.
+```mermaid
+flowchart TD
+    A[tickets/todo] --> B[tickets/review]
+    B --> C[tickets/building]
+    C --> D[tickets/done]
+    B --> E[tech-impl-plan]
+    C --> F[build]
+    C --> G[qa-tester]
+    G --> H[visual-qa]
+    H --> C
+```
 
-If any required item is missing, the task is incomplete.
+## DoD
 
----
+Done only if relevant items pass:
 
-## 0) Contract Boundary (What Lives Here vs Skills)
+- plan exists + matches `skills/tech-impl-plan`
+- tests pass
+- TS strict passes; no `any`
+- lint + format clean
+- `docs/HISTORY.md` updated
+- durable rules promoted to `docs/MEMORY.md`
+- repeated failures or user correction patterns logged in `docs/TROUBLES.md` when applicable
+- new invariants logged + referenced
+- review loop done; `visual-qa` only if UI changed
+- changes pushed to GitHub
 
-This file defines non-negotiable guardrails and quality bars.
+## Boundary
 
-Detailed planning format, implementation sequencing, and review runbooks live in skills:
+Root file = repo guardrails only.
 
-* `skills/tech-impl-plan` for planning output structure.
-* `skills/prd` for requirement shaping when needed.
-* `skills/spec-to-ticket` for slice-to-ticket conversion when needed.
-* `skills/runtime-debugging` for reproducible bugs, flaky failures, regressions, and runtime investigations that need evidence before a fix.
-* `skills/visual-qa` only when UI surface changed.
-* `skills/code-review` for final quality review.
+Use:
 
-Do not duplicate skill internals in this file.
+- `commit-message` for compact commit subject style
+- `tech-impl-plan` for planning shape
+- `prd` when reqs are unclear
+- `spec-to-ticket` for slicing
+- `runtime-debugging` for repro/runtime issues
+- `visual-qa` for UI changes
+- `code-review` for final quality sweep
 
----
+Avoid:
 
-## 1) Context First (Always)
+- repeating skill internals here
 
-Before writing or changing code, gather context first:
+## Context First
 
-* Read relevant specs or PRDs.
-* Read nearest module `README.md` and `AGENTS.md`.
-* Search for existing patterns before introducing new ones.
-* Inspect related files that participate in the flow.
-* Identify affected interfaces and contracts.
-* Bootstrap memory context from `docs/progress.md`, `docs/prd.md`, and relevant `docs/specs/*`.
+Before edits:
+
+- read nearby specs / PRDs / module docs
+- search for existing patterns
+- inspect affected files + interfaces
+- bootstrap from `tickets/review/*`, `tickets/building/*`, `tickets/todo/*`, `docs/prd.md`, `docs/specs/*`, `docs/MEMORY.md`, `docs/TROUBLES.md`
 
 No blind edits.
 
----
+## Modes
 
-## 2) High-Level Operating Modes
+- planning = work from `tickets/review/` until user approves
+- build = work from `tickets/building/` until implementation, QA, evidence, and review are complete
 
-You will usually be tasked with either planning or execution.
+## Core Rules
 
-### Planning mode (human-confirmed before execution)
+- delete > accumulate
+- modular by default
+- code = source of truth
+- no speculative abstractions
+- MVP first: 1 -> 10 -> 100
 
-* Start with `prd` when requirements are unclear or not yet sliced.
-* Use `spec-to-ticket` to break approved SLC scope into smaller executable tickets when needed.
-* Use `tech-impl-plan` to plan one selected ticket/SLC for implementation.
-* Planning output should call out which skills are needed and which subagents (if any) are justified.
+## Module Scaffolding
 
-### Build mode (execute an approved plan)
+If a touched module lacks them, add:
 
-Flow:
+1. `MODULE/AGENTS.md`
+2. `MODULE/README.md`
 
-* Build according to the approved plan.
-* Use `runtime-debugging` before speculative fixes when the bug is reproducible but the cause is not obvious from reading code.
-* Test, then run visual QA workflow only if UI changed.
-* Run review workflow before completion.
+README should cover:
 
----
+- purpose
+- public API / entrypoints
+- minimal example
+- how to test
 
-## 3) Philosophy
+## Memory
 
-* **Delete > accumulate.**
-* **Modular by default.**
-* **Code is source of truth.**
-* No speculative abstractions.
+Files:
 
----
+- `docs/HISTORY.md` = append-only
+- `docs/MEMORY.md` = curated constraints
+- `docs/TROUBLES.md` = append-only repeated-failure and correction log
 
-## 4) Required Module Scaffolding
+Format:
 
-When creating or modifying a module lacking these, add:
+- `YYYY-MM-DD HH:mm Z | TYPE | MEM-#### | tags | text`
 
-1. `MODULE/AGENTS.md` - boundaries, invariants, tests, conventions.
-2. `MODULE/README.md` - usage only:
-   * Purpose
-   * Public API / entrypoints
-   * Minimal example
-   * How to test
+Log when:
 
-Internal reasoning belongs in code and memory IDs, not long prose docs.
+- invariant
+- API or data model change
+- behavior / perf / security constraint
+- migration
+- architecture shift
 
----
+Troubles log when:
 
-## 5) Observational Memory (Mandatory)
+- the same miss or correction happens more than once
+- the user has to restate a requirement because execution drifted
+- a preventable tool/process mistake blocks progress
+- an expectation mismatch should feed future system tuning
 
-Deterministic. Grep-first. Immutable history.
+Troubles format:
 
-### Files
+- `YYYY-MM-DD HH:mm Z | area,tags | request | miss | correction | prevention`
 
-* `docs/HISTORY.md` (append-only)
-* `docs/MEMORY.md` (curated constraints)
+Promotion rule:
 
-### Types
+- `docs/TROUBLES.md` is for raw operator feedback, not durable truth
+- promote repeated or structural lessons from `docs/TROUBLES.md` into `docs/MEMORY.md`, `AGENTS.md`, or the relevant skill only after the pattern is clear
 
-`discovery | decision | problem | solution | pattern | warning | success | refactor | bugfix | feature`
+If you introduce an invariant:
 
-### Format
+1. log memory
+2. update nearest `AGENTS.md`
+3. reference `MEM-####` in code if applicable
 
-`YYYY-MM-DD HH:mm Z | TYPE | MEM-#### | tags | text`
+## Code Standards
 
-### Log When
+- TS strict
+- no `any`
+- explicit return types on exported APIs
+- side-effects at edges
+- tests colocated when practical
+- modules should stay extractable
 
-* New invariant
-* API change
-* Data model change
-* Behavioral change
-* Performance constraint
-* Security constraint
-* Migration
-* Architecture shift
-
-Promote durable constraints to `docs/MEMORY.md`.
-
-Reference IDs in code:
-
-```ts
-// MEM-0042 decision: adapters own side-effects; core stays pure
-```
-
----
-
-## 6) MVP-First Execution (Non-Negotiable)
-
-* Smallest possible slice first.
-* Prove before scaling.
-* Ramp intentionally: 1 -> 10 -> 100.
-* No large fetches or migrations pre-MVP.
-* Use dry-runs, limits, and checkpoints.
-* Log scale-up approval as a `decision`.
-
----
-
-## 7) Documentation Standard (In-Code)
-
-Major logic files must begin with:
+Major logic files should start with the standard header block:
 
 ```ts
 /**
@@ -171,80 +168,76 @@ Major logic files must begin with:
  */
 ```
 
----
+## Delegation
 
-## 8) Engineering Standards
+Use only when it materially improves outcome.
 
-* TypeScript strict.
-* No `any`.
-* Explicit return types for exported APIs.
-* Side-effects at edges; pure core preferred.
-* Tests colocated within modules.
-* Modules should stay extractable into packages.
+Required:
 
----
+- repro/runtime bug w/ unclear cause -> `runtime-debugging`
+- UI behavior/layout/style change -> `visual-qa`
+- broad cross-module exploration -> `explore`
+- final quality sweep -> `code-review`
 
-## 9) Agent Contract
+Avoid:
 
-* Suggest structural improvements when relevant.
-* If introducing an invariant:
-  1. Log memory
-  2. Update nearest `AGENTS.md`
-  3. Reference `MEM-####` in code
-* For long-running tickets, close with a brief reminder of:
-  * what the ticket was about,
-  * before state,
-  * after state.
+- forcing `runtime-debugging` for obvious stack-trace fixes
+- `visual-qa` for docs/rules-only changes
+- unnecessary delegation for small local edits
 
----
+If a plan delegates, include:
 
-## 10) Delegation Guardrails
+- delegated agent
+- skill
+- one-line why
+- expected artifact
 
-Delegation is conditional, not default. Use one-layer delegation only when it materially improves outcomes.
+If none: `Not needed`.
 
-### Required triggers
+## Ticket State Machine
 
-* Reproducible runtime bug, flaky failure, regression, performance issue, or root-cause investigation where code reading alone is insufficient -> include `runtime-debugging`. See `MEM-0001`.
-* UI layout/interaction/visual behavior changed -> include `visual-qa`.
-* Broad cross-module exploration needed -> use `explore`.
-* Final implementation quality sweep -> use `code-review`.
+<!--
+Board movement is part of execution, not a chat convention.
+Agents should update the ticket file and board state together so the filesystem board stays trustworthy.
+-->
 
-### Anti-triggers
+- new or split work -> create a ticket in `tickets/todo/`
+- active planning / user approval -> keep the ticket in `tickets/review/`
+- approved execution -> move the ticket to `tickets/building/`
+- implementation + QA + evidence + final human confirmation -> move the ticket to `tickets/done/`
 
-* Obvious stack-trace or straightforward error with a clear direct fix -> do not force `runtime-debugging`.
-* Docs-only, markdown-only, or rule-text updates -> do not run `visual-qa`.
-* Small local edits with clear scope -> do not delegate unnecessarily.
+Agents must:
 
-### Delegation note requirement
+- follow the canonical ticket shape in `tickets/templates/ticket.md`
+- update the ticket file, not just chat
+- record blockers in the ticket
+- create linked follow-up tickets when scope splits or new work is discovered
+- update `tickets/INDEX.md` when a ticket changes state
 
-Any plan that delegates must include:
+Blocker rule:
 
-* delegated agent,
-* corresponding skill,
-* one-line justification,
-* expected output artifact.
+- execution blocker -> keep ticket in `tickets/building/` and record blocker
+- planning/scope blocker -> move ticket back to `tickets/review/`
 
-If no delegation is needed, state `Not needed`.
+## Defaults
 
----
+- FE: Next.js App Router
+- BE: Convex
+- state: Zustand
+- AI: Vercel AI SDK
+- core: TypeScript + Node.js
 
-## 11) Standard Tech Stack Defaults
+## Commit Style
 
-* Frontend: Next.js (App Router)
-* Backend: Convex
-* State: Zustand
-* AI: Vercel AI SDK
-* Core: TypeScript + Node.js
+- default: `type(scope): lower-case imperative summary`
+- lead with the main delta, not the file list
+- keep scope short and obvious when possible
 
----
+## Stop If
 
-## 12) Stop Conditions
-
-Halt and ask for clarification when:
-
-* Scope is unclear or conflicting.
-* Interface/API contract is ambiguous.
-* Migration is risky and rollback strategy is missing.
-* Circular dependency appears in the plan.
+- scope conflicts or is unclear
+- API/interface contract is ambiguous
+- migration is risky with no rollback
+- circular dependency appears
 
 No silent architectural drift.

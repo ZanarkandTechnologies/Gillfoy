@@ -2,6 +2,11 @@
 
 Copy and paste this into a new session to start a build pass.
 
+<!--
+Keep this prompt execution-only.
+High-frequency build actions stay here; rationale and policy stay in AGENTS.md and skills.
+-->
+
 ---
 
 0a. Read the active ticket in `@tickets/building/*`.
@@ -11,6 +16,11 @@ Copy and paste this into a new session to start a build pass.
 
 Build rules:
 
+<!--
+This block is the build closeout loop:
+finish implementation, validate it, write back into the ticket, then move board state.
+-->
+
 - complete one active ticket by default
 - validate with the project backpressure commands: tests, lint, typecheck, build
 - if the ticket changes user-visible behavior, delegate to `qa-tester`
@@ -19,6 +29,10 @@ Build rules:
   - blockers
   - artifact links
   - user evidence
+- update project records when applicable:
+  - `docs/HISTORY.md`
+  - `docs/MEMORY.md`
+  - `docs/TROUBLES.md`
 - if new scope is discovered, create a linked follow-up ticket in `tickets/todo/`
 - if blocked by execution, keep the ticket in `tickets/building/`
 - if blocked by planning ambiguity, move the ticket back to `tickets/review/`

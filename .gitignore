@@ -5,12 +5,16 @@
 !.gitignore
 
 # Reinclude config files
+!README.md
 !mcp.json
 !AGENTS.md
 !AGENTS.assistant.md
 !docs/
 !docs/HISTORY.md
 !docs/MEMORY.md
+!docs/TASTE.md
+!tickets/
+!tickets/**
 
 # Track all personal agents
 !agents/
