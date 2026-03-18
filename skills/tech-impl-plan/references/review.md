@@ -20,11 +20,13 @@ If any answer is weak, tighten the plan first.
 - Are we saying too much for a straightforward change?
 - Are we saying too little for a risky or unfamiliar path?
 - Would a reviewer understand how the change happens without reading an appendix?
+- If the ticket depends on a `Test hook`, is that hook clearly good enough to support deterministic proof before build starts?
 
 ## Fail If
 
 - multi-commit scope is hidden inside a "single" plan
 - references were skipped without saying so
 - proof is generic rather than observable
+- the plan depends on tricky setup but never checks whether the ticket's `Test hook` is sufficient
 - the plan explains everything except the actual delta
 - the approval surface is bloated, vague, or unconvincing
