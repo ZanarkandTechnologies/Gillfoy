@@ -1,111 +1,132 @@
 ---
 name: tech-impl-plan
-version: 1.1.0
-description: "Concise implementation planning skill. Produces a brief, teachable plan with why/what/how, data flow, blast radius, concrete proof scenarios, efficiency checks against existing code, and a clear yes/no handoff."
+version: 1.3.0
+description: "Approval-first implementation planning skill. Produces a compact pitch with req understanding, before -> after, touched areas, core pseudocode, proof, an automatic plan-quality review, and a clear yes/no handoff."
 allowed-tools: Read, Glob, Grep
 ---
 
-# Tech Impl Plan Skill
+# Tech Impl Plan
 
-Use this for software implementation planning. Optimize for human approval clarity, not exhaustiveness. Plan only enough for the next commit.
+Use for implementation planning. Optimize for approval speed. Plan only the next commit.
 
-## Core Prompt Wording (Use Literally)
+<!-- MEM-0007 decision: planning output should be approval-first and compact: pitch, before->after, delta, core flow, proof, ask. -->
+<!-- MEM-0016 decision: every plan should run a built-in quality pass before handoff so missing references, weak proof, or hidden scope drift are caught before approval. -->
+<!-- MEM-0008 decision: root AGENTS should stay repo-only and terse; skill internals belong in skills, not repo contract text. -->
 
-0a. Study `@docs/prd.md` to understand audience, outcomes, and constraints.  
-0b. Study `@docs/specs/*` to learn application specifications.  
-0c. Study `@docs/progress.md` to understand current ticket board and slice.  
-0d. Study `@docs/MEMORY.md` to understand durable constraints.  
-0e. Search the codebase before assuming anything is missing.
+## Core Prompt Wording
 
-## Workflow (First-Load Contract)
+0a. Study `@docs/prd.md` for outcomes + constraints.  
+0b. Study `@docs/specs/*` for spec truth.  
+0c. Study the active ticket in `@tickets/review/*` first; if none exists, inspect `@tickets/todo/*`.  
+0d. Study `@docs/MEMORY.md` for durable constraints.  
+0e. Study `@docs/TROUBLES.md` for repeated planning/execution misses when present.  
+0f. Search the codebase before assuming anything is missing.
 
-1. Gather coding context and choose the next smallest executable slice.
-2. Decide whether the request fits in one commit. If not, stop and ask the user whether to split it into multiple plans.
-3. Reintroduce the current system in simple terms before describing the change.
-4. Explain only the variables that change, then show the difference between current and planned behavior.
-5. Show how it works with touched files, file roles, and a Mermaid data-flow diagram when new files or paths are introduced. Use ASCII only for very small trivial flows.
-6. Dry-run one realistic scenario through the planned flow so a human can follow it step by step.
-7. Investigate the existing codepath and explain why this is the minimal and most efficient change that fits the current system.
-8. Call out blast radius, risks, and rollback or recovery notes if needed.
-9. Add concrete proof scenarios with observable outcomes and the exact tests or checks that validate them.
-10. If the plan is too long for easy chat review, write it to a markdown file and return a short chat summary with the file path.
-11. Return a clear yes/no handoff and stop before implementation.
+## First-Load Contract
 
-## Core Decision Branches
+### Trigger Conditions
 
-- **High ambiguity/risk** -> spend more space on teachability, dry run, and risk control; keep implementation detail brief.
-- **Low ambiguity/risk** -> keep the plan short and direct.
-- **Task too large** -> ask the user whether to split into multiple plans; only plan the next slice after confirmation.
+- user asks for a plan, proposal, implementation approach, or approval-ready change summary
+- feature/refactor work needs a human yes/no before moving a ticket from `review` to `building`
+- request is large enough that `B -> A` and proof should be made explicit
 
-## Delegation Guardrails (Mandatory)
+### Workflow (7 Steps)
 
-- Delegate only when it materially improves quality or speed.
-- Do not include specialized QA delegation for docs-only, markdown-only, or rule-text-only work.
-- Include `visual-qa` only when UI layout, styling, interaction, or visual behavior is in scope.
-- If no delegation is needed, explicitly write `Not needed`.
+1. **Scope**: choose the next smallest executable slice.
+2. **Split check**: if not one commit, stop and ask to split.
+3. **Pitch**: show `Req`, `Bet`, `Win`.
+4. **Delta**: show `Before -> After`, touched areas, and keep/change/delete.
+5. **Teach**: show core pseudocode; add diagram or appendix only if the path is new or risky.
+6. **Review**: run the plan through the quality gate; fix weak spots before handoff.
+7. **Proof + ask**: show proof points, plan review result, main risk, delegation note, and `Ready: yes/no`.
 
-## Top 3 Gotchas
+### Core Decision Branches
+
+- **Low risk / obvious fit** -> keep plan short; no appendix.
+- **High ambiguity / risk** -> keep short top section; push details below fold.
+- **Multi-commit work** -> split before planning in detail.
+- **Docs-only / rule-text-only** -> no specialized QA delegation.
+
+### Top 3 Gotchas
 
 1. Do not implement; this skill is plan-only.
-2. Do not write generic tests; tests must be user-observable and concrete.
-3. Do not dump a multi-commit design into chat. Stop, split, and ask first.
+2. Do not bury `Before -> After` below long explanation.
+3. Do not default to diagrams, dry-runs, or deep rationale when pseudocode is enough.
 
-## Outcome Contract
+### Outcome Contract
 
-Each output must include:
+Every plan must include:
 
-1. Plan Snapshot:
-   - change
-   - why now
-   - confidence
-   - size: one commit / needs split
-2. Current System:
-   - simple explanation of how it works today
-3. What Changes:
-   - variables changing in the current system
-   - before -> after behavior
-   - user-visible outcome
-4. How It Works:
-   - touched files
-   - role of each new or changed file
-   - Mermaid data-flow diagram when introducing new files or a new path
-   - one dry run in simple language
-5. Why This Is The Minimal And Most Efficient Change:
-   - existing code investigated
-   - what will be reused, avoided, deleted, or left unchanged
-   - why a smaller change would not be sufficient
-   - justification for each new file or abstraction
-6. Blast Radius:
-   - affected systems
-   - main risks
-   - rollback or recovery note when relevant
-7. Proof:
-   - 2-5 concrete scenarios
-   - exact automated or manual checks for each scenario
-8. Delegation Note:
-   - skills or subagents only if needed
-   - `Not needed` if none
-9. Approval Handoff:
-   - ready or not ready
-   - what happens after approval
-10. Output Mode:
-   - if long, write the plan to a markdown file and return the path plus a short summary
+1. `Pitch`
+   - `Req:` what I think you want
+   - `Bet:` better option if any
+   - `Win:` why this shape
+2. `B -> A`
+   - before
+   - after
+   - user/dev outcome
+3. `Delta`
+   - touched files/modules
+   - keep/change/delete
+4. `Core Flow`
+   - 6-12 lines of pseudocode
+   - optional diagram only for new/risky paths
+5. `Proof`
+   - 2-4 concrete checks
+   - main risk / rollback note
+6. `Plan Review`
+   - `Refs:` confirm which sources were actually used: PRD/spec/ticket/memory/troubles/code
+   - `Checks:` pass/fix for scope, proof, guardrails, and rollback clarity
+   - `Fixes:` what was tightened before handoff, or `none`
+7. `Ask`
+   - `Ready: yes/no`
+   - next step after approval
+8. `Delegation`
+   - skill/subagent only if needed
+   - otherwise `Not needed`
+9. `Ticket Move`
+   - where the ticket should live now
+   - any spawned follow-up tickets
+   - whether it is blocked in `building/` or returned to `review/`
 
 ## Efficiency Rules
 
-- Investigate the relevant existing code before proposing structural changes.
-- Prefer reusing and extending existing modules over adding new ones.
-- Prefer deleting or simplifying code over layering new abstractions on top.
-- Every new file must have a one-line purpose.
-- Every new abstraction must explain why the existing shape is insufficient.
-- If the plan cannot explain the fit with existing code, it is not ready for approval.
-- If the work spans multiple commits, do not fully plan all of them in one pass.
+- Lead with the approval surface, not the appendix.
+- Prefer symbols and compact labels over repeated prose.
+- Reuse existing modules; justify every new file or abstraction in one line.
+- Keep deeper implementation detail below the top section.
+- If the plan cannot be understood from `Pitch + B -> A + Core Flow`, it is not ready.
+- If planning reveals overflow scope, split it into new `tickets/todo/` follow-ups instead of stretching one ticket.
 
-## Prompt Entry
+## Plan Quality Gate
 
-- [prompts/plan.md](prompts/plan.md)
+Before returning the plan, run these checks against the drafted output:
+
+1. **Reference coverage**
+   - Did the plan actually use the relevant PRD, spec, ticket, memory, troubles, and local code context?
+   - If a source was skipped, is that omission safe and explicit?
+2. **Scope discipline**
+   - Is this really one commit?
+   - If not, stop and split instead of hiding extra scope in prose.
+3. **Guardrail fit**
+   - Does the plan reuse existing patterns?
+   - Does it avoid speculative abstractions, silent migrations, and unnecessary new files?
+4. **Proof quality**
+   - Are the checks concrete and observable?
+   - Would a reviewer know exactly how to tell success from failure?
+5. **Risk clarity**
+   - Is the main risk named?
+   - Is rollback or containment clear enough for the size of the change?
+
+If any check fails, tighten the plan before presenting it. The final output should show the review result, not the draft that failed it.
 
 ## References
 
+- [prompts/plan.md](prompts/plan.md)
 - [references/template.md](references/template.md)
 - [references/examples.md](references/examples.md)
+- [references/review.md](references/review.md)
+
+## Final Check
+
+Before handoff, read `references/review.md` and tighten the plan until it passes those checks.

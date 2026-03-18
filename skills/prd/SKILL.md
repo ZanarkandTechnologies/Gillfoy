@@ -20,13 +20,15 @@ Use this as the first session in the Ralph workflow.
 - Ask 6-10 high-signal questions (audience, JTBD, slice, non-goals, constraints, risks).
 - Keep questions tied to implementation decisions.
 - Confirm the first SLC slice boundary.
+- Before handoff, read `references/review.md` and tighten the PRD until it passes those checks.
 
 ## Output
 
 - Primary file: `docs/prd.md`
 - Use template: `references/prd-template.md`
 - Discovery guide: `references/requirements-discovery.md`
+- Review guide: `references/review.md`
 
 ## Handoff
 
-After PRD is accepted, run `spec-to-ticket` for slice decomposition into `docs/progress.md`.
+After PRD is accepted, run `spec-to-ticket` for slice decomposition into raw ticket files under `tickets/todo/`.

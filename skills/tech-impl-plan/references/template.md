@@ -1,90 +1,64 @@
-# Tech Implementation Plan Template
+# Tech Impl Plan Template
 
-## Plan Snapshot
+## Pitch
 
-- **Change:**
-- **Why now:**
-- **Confidence:**
-- **Size:** `one commit` / `needs split`
+- `Req:`
+- `Bet:`
+- `Win:`
 
-## Current System
+## B -> A
 
-- **Today, in simple terms:**
-- **Key moving parts that matter for this change:**
+- `Before:`
+- `After:`
+- `Outcome:`
 
-## What Changes
+## Delta
 
-- **Variables changing in the current system:**
-- **Before:**
-- **After:**
-- **User-visible outcome:**
+- `Touch:`
+- `Keep:`
+- `Change:`
+- `Delete/Avoid:`
 
-## How It Works
+## Core Flow
 
-- **Touched files:**
-- **New or changed file roles:**
-  - `path/to/file.ts`: one-line role
-  - `path/to/other.ts`: one-line role
-- **Data flow:** include a Mermaid diagram when introducing new files or a new path
-
-```mermaid
-flowchart TD
-    A[User action] --> B[file A<br>receives input]
-    B --> C[file B<br>transforms / decides]
-    C --> D[file C<br>persists / renders]
-    D --> E[Visible result]
+```pseudo
+input/request
+-> inspect current path
+-> decide split or single-commit
+-> apply minimal delta
+-> persist/render/return
+-> verify proof points
 ```
 
-- **Dry run:**
-  1. User does X
-  2. File/module Y receives it
-  3. Decision or transformation Z happens
-  4. Result is rendered, returned, or stored
-
-## Why This Is The Minimal And Most Efficient Change
-
-- **Investigated existing code:**
-- **Reuse:** what existing code will be extended or reused
-- **Do not add:** what code, abstraction, or file should be avoided
-- **Delete or simplify:** any code that should be removed or flattened
-- **Why not smaller:** why a smaller change would fail or be incomplete
-- **Justification for new files or abstractions:**
-
-## Blast Radius
-
-- **Affected systems:**
-- **Main risks:**
-- **Rollback or recovery note:**
+- `New path?` if yes, add tiny diagram
 
 ## Proof
 
-- **Scenario 1**
-  - Steps:
-  - Expected result:
-  - How we test it:
-- **Scenario 2**
-  - Steps:
-  - Expected result:
-  - How we test it:
+- `P1:`
+- `P2:`
+- `Risk:`
+- `Rollback:`
 
-Example style:
+## Plan Review
 
-- I create a new project and immediately see the simpler approval-friendly plan format.
-- I review a plan that adds a new file and can see exactly what that file does in the data-flow section.
-- I review a plan for a large change and the planner splits it into smaller tickets instead of dumping one giant plan.
+- `Refs:` prd/spec/ticket/memory/troubles/code
+- `Scope:` pass / fix
+- `Proof:` pass / fix
+- `Guardrails:` pass / fix
+- `Fixes:` none / short note
 
-## Delegation Note
+## Delegation
 
-- **Skills or subagents:** `Not needed` unless justified
-- **Why:**
-- **Expected artifact:**
+- `Need:` `Not needed` / skill / subagent
+- `Why:`
+- `Artifact:`
 
-## Approval
+## Ask
 
-- **Ready to implement:** yes / no
-- **Next step after approval:**
-- **If not ready, split into:**
+- `Ready:` yes / no
+- `Next:`
+- `If split:`
 
-## Output Mode
+## Optional Appendix
 
-- **If this plan is long:** write it to a markdown file and return the file path with a short chat summary
+- use only for risky, novel, or cross-cutting details
