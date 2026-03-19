@@ -12,55 +12,107 @@ Execution-time agents should rely on AGENTS.md plus the active ticket.
 
 ```mermaid
 flowchart TD
-    A[init-project] --> B[docs/prd.md]
-    A --> C[docs/TASTE.md]
-    A --> D[AGENTS.md / PROJECT_RULES.md]
-    A --> T[tickets/todo review building done]
-    A --> IDX[tickets/INDEX.md]
+    subgraph BOOT["Bootstrap + Source Docs"]
+        A[init-project]
+        B[docs/prd.md]
+        C[docs/TASTE.md]
+        D[AGENTS.md / PROJECT_RULES.md]
+        T[tickets/todo review building done]
+        IDX[tickets/INDEX.md]
+    end
 
-    B --> E[prd]
-    E --> F[docs/prd.md]
-    F --> G[spec-to-ticket]
+    subgraph PLAN["Planning + Ticket Shaping"]
+        E[prd]
+        F[docs/prd.md]
+        G[spec-to-ticket]
+        H[tickets/todo]
+        R[tickets/review]
+        I[tech-impl-plan]
+    end
+
+    subgraph BUILD["Build + Verification Loop"]
+        BLD[tickets/building]
+        K[code changes + tests]
+        L[qa-tester]
+        M[visual-qa]
+        N[runtime-debugging]
+        O[docs/research/qa-testing/*]
+        DN[tickets/done]
+    end
+
+    subgraph LEARN["History + Feedback"]
+        P[docs/HISTORY.md]
+        Q[docs/MEMORY.md]
+        TR[docs/TROUBLES.md]
+        FB[weekly feedback pass]
+    end
+
+    A --> B
+    A --> C
+    A --> D
+    A --> T
+    A --> IDX
+
+    B --> E
+    E --> F
+    F --> G
     C --> G
-    G --> H[tickets/todo]
+    G --> H
 
-    H --> R[tickets/review]
-    R --> I[tech-impl-plan]
+    H --> R
+    R --> I
     F --> I
-    I --> BLD[tickets/building]
+    I --> BLD
     H --> IDX
     R --> IDX
     BLD --> IDX
-    DN[tickets/done] --> IDX
+    DN --> IDX
 
-    BLD --> K[code changes + tests]
-    BLD --> L[qa-tester]
+    BLD --> K
+    BLD --> L
     C --> L
-    L --> M[visual-qa]
+    L --> M
     C --> M
     BLD --> M
 
     K --> L
-    K --> N[runtime-debugging]
+    K --> N
 
-    L --> O[docs/research/qa-testing/*]
+    L --> O
     M --> O
     O --> BLD
-    BLD --> DN[tickets/done]
+    BLD --> DN
 
-    K --> P[docs/HISTORY.md]
-    K --> Q[docs/MEMORY.md]
-    K --> TR[docs/TROUBLES.md]
+    K --> P
+    K --> Q
+    K --> TR
     N --> P
     N --> Q
     N --> TR
     O --> P
     O --> Q
     O --> TR
-    TR --> FB[weekly feedback pass]
+    TR --> FB
     FB --> D
     FB --> E
     FB --> G
+
+    classDef boot fill:#1f2937,stroke:#f59e0b,color:#f9fafb,stroke-width:1.5px;
+    classDef plan fill:#0f3d3e,stroke:#2dd4bf,color:#ecfeff,stroke-width:1.5px;
+    classDef build fill:#3b1f4a,stroke:#c084fc,color:#faf5ff,stroke-width:1.5px;
+    classDef learn fill:#3f2a12,stroke:#fbbf24,color:#fffbeb,stroke-width:1.5px;
+    classDef board fill:#111827,stroke:#94a3b8,color:#e5e7eb,stroke-width:1.5px;
+
+    class A,B,C,D boot;
+    class E,F,G,I plan;
+    class K,L,M,N,O build;
+    class P,Q,TR,FB learn;
+    class T,IDX,H,R,BLD,DN board;
+
+    style BOOT fill:#111827,stroke:#f59e0b,stroke-width:1px,color:#f9fafb
+    style PLAN fill:#0b2f31,stroke:#2dd4bf,stroke-width:1px,color:#ecfeff
+    style BUILD fill:#2c1537,stroke:#c084fc,stroke-width:1px,color:#faf5ff
+    style LEARN fill:#33240f,stroke:#fbbf24,stroke-width:1px,color:#fffbeb
 ```
 
 ## Core Flow

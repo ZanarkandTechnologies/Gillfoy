@@ -15,6 +15,7 @@
 ## Done
 
 - add ticket links here after final confirmation
+- [TKT-022: improve readme system map styling](/home/kenjipcx/.cursor/tickets/done/TKT-022-readme-system-map-styling.md)
 
 ## Blockers
 
