@@ -17,8 +17,41 @@ These exist to support board movement and follow-up discovery, not to recreate a
 - dependencies:
 - blockers:
 - spawned follow-ups:
+- parallelizable after:
 
 ## Goal
+
+## Scope Decision
+
+<!--
+Required when planning or splitting work.
+Explain why this ticket boundary is the chosen execution unit and what was intentionally left out.
+-->
+
+## Implementation Plan
+
+<!--
+The selected review ticket is the default home for the approval-ready tech impl plan.
+Keep it compact: Pitch, B -> A, Delta, Core Flow, Proof, Plan Review, Ask, Delegation, Ticket Move.
+-->
+
+### Pitch
+
+### B -> A
+
+### Delta
+
+### Core Flow
+
+### Proof
+
+### Plan Review
+
+### Ask
+
+### Delegation
+
+### Ticket Move
 
 ## Acceptance Criteria
 - [ ] AC-1:
@@ -39,6 +72,18 @@ This block exists so build and QA do not have to guess how to open, stabilize, i
 - Taste refs:
 - Expected artifacts:
 - Delegate with: delegated agent/skill + ticket path/section + expected artifact + write-back target
+
+## Execution Proof
+
+<!--
+Default proof surface for non-UI tickets.
+Use this when the work does not need the UI-specific Agent Contract, or alongside it when non-UI proof matters too.
+-->
+
+- Open/prove:
+- Seed/reset:
+- Inspect/assert:
+- Artifact path:
 
 ## Evidence Checklist
 

@@ -60,6 +60,15 @@ Avoid:
 
 - repeating skill internals here
 
+## Planning Layers
+
+- use the smallest planning layer that fits the request
+- direct ticket -> `tech-impl-plan` for concrete one-ticket work
+- `prd` when product truth is missing or materially changing
+- spec/slice decomposition only when work spans multiple tickets, modules, or approval checkpoints
+- do not use `tech-impl-plan` as broad discovery or product brainstorming
+- if product truth is stable but the ticket boundary is still fuzzy, fill `Scope Decision` in the ticket and stop before full tech impl planning
+
 ## Context First
 
 Before edits:
@@ -71,10 +80,24 @@ Before edits:
 
 No blind edits.
 
+Before planning, decide which artifact is missing:
+
+- product truth -> `docs/prd.md`
+- slice truth -> `docs/specs/*`
+- execution truth -> ticket in `tickets/*`
+
+Do not create a larger planning artifact if a smaller one is enough.
+
 ## Modes
 
 - planning = work from `tickets/review/` until user approves
 - build = work from `tickets/building/` until implementation, QA, evidence, and review are complete
+
+Planning handoff rule:
+
+- the selected ticket in `tickets/review/` is the default home for scope decisions and the technical implementation plan
+- if the chosen ticket is still in `tickets/todo/`, move it to `tickets/review/` before writing a full `tech-impl-plan`
+- chat should summarize that ticket and ask for approval, not become the competing source of truth
 
 ## Core Rules
 
@@ -83,6 +106,8 @@ No blind edits.
 - code = source of truth
 - no speculative abstractions
 - MVP first: 1 -> 10 -> 100
+- front-load autonomous proof surfaces: open, seed/reset, inspect, assert, artifact path
+- prefer explicit ticket fields over comment-only conventions
 
 ## Module Scaffolding
 
@@ -224,6 +249,8 @@ Agents must:
 
 - follow the canonical ticket shape in `tickets/templates/ticket.md`
 - update the ticket file, not just chat
+- keep the selected ticket as the source of truth for scope decisions and implementation plan
+- use `Scope Decision` as the valid stopping point when the ticket is not yet ready for full tech impl planning
 - record blockers in the ticket
 - create linked follow-up tickets when scope splits or new work is discovered
 - update `tickets/INDEX.md` when a ticket changes state
@@ -232,6 +259,16 @@ Blocker rule:
 
 - execution blocker -> keep ticket in `tickets/building/` and record blocker
 - planning/scope blocker -> move ticket back to `tickets/review/`
+
+## Final Handoff
+
+- final user handoff should use this packet:
+  - `Session recap`
+  - `Outcome`
+  - `Current ticket state`
+  - `Only if applicable: blocker or spawned follow-up`
+- do not default to speculative follow-up upsell once the accepted ticket scope is complete
+- do not relabel optional nice-to-haves as blockers or risks just to justify a next-step suggestion
 
 ## Defaults
 

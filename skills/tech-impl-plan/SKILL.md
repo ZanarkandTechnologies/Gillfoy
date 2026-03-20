@@ -1,13 +1,13 @@
 ---
 name: tech-impl-plan
-version: 1.3.0
-description: "Approval-first implementation planning skill. Produces a compact pitch with req understanding, before -> after, touched areas, core pseudocode, proof, an automatic plan-quality review, and a clear yes/no handoff."
+version: 1.4.0
+description: "Approval-first implementation planning skill. Writes a compact one-ticket plan into the selected review ticket, then mirrors it in chat as a brief approval summary."
 allowed-tools: Read, Glob, Grep
 ---
 
 # Tech Impl Plan
 
-Use for implementation planning. Optimize for approval speed. Plan only the next commit.
+Use for implementation planning after the ticket boundary is already credible. Optimize for approval speed. Plan only the next commit.
 
 <!-- MEM-0007 decision: planning output should be approval-first and compact: pitch, before->after, delta, core flow, proof, ask. -->
 <!-- MEM-0016 decision: every plan should run a built-in quality pass before handoff so missing references, weak proof, or hidden scope drift are caught before approval. -->
@@ -17,7 +17,7 @@ Use for implementation planning. Optimize for approval speed. Plan only the next
 
 0a. Study `@docs/prd.md` for outcomes + constraints.  
 0b. Study `@docs/specs/*` for spec truth.  
-0c. Study the active ticket in `@tickets/review/*` first; if none exists, inspect `@tickets/todo/*`.  
+0c. Study the selected ticket in `@tickets/review/*`. If the target ticket is still in `@tickets/todo/*`, move it to `review/` before writing the full plan.  
 0d. Study `@docs/MEMORY.md` for durable constraints.  
 0e. Study `@docs/TROUBLES.md` for repeated planning/execution misses when present.  
 0f. Search the codebase before assuming anything is missing.
@@ -30,15 +30,18 @@ Use for implementation planning. Optimize for approval speed. Plan only the next
 - feature/refactor work needs a human yes/no before moving a ticket from `review` to `building`
 - request is large enough that `B -> A` and proof should be made explicit
 
+Do not use this skill for broad discovery, product brainstorming, or multi-ticket slice design. If the work is still fuzzy, route back to `prd`, spec work, ticket splitting, or a `Scope Decision`-only pass in the ticket first.
+
 ### Workflow (7 Steps)
 
 1. **Scope**: choose the next smallest executable slice.
 2. **Split check**: if not one commit, stop and ask to split.
-3. **Pitch**: show `Req`, `Bet`, `Win`.
-4. **Delta**: show `Before -> After`, touched areas, and keep/change/delete.
-5. **Teach**: show core pseudocode; add diagram or appendix only if the path is new or risky.
-6. **Review**: run the plan through the quality gate; fix weak spots before handoff.
-7. **Proof + ask**: show proof points, plan review result, main risk, delegation note, and `Ready: yes/no`.
+3. **Boundary check**: if product truth is stable but the ticket boundary is still fuzzy, update `Scope Decision` only and stop.
+4. **Pitch**: show `Req`, `Bet`, `Win`.
+5. **Delta**: show `Before -> After`, touched areas, and keep/change/delete.
+6. **Teach**: show core pseudocode; add diagram or appendix only if the path is new or risky.
+7. **Review**: run the plan through the quality gate; fix weak spots before handoff.
+8. **Proof + ask**: show proof points, plan review result, main risk, delegation note, and `Ready: yes/no`.
 
 ### Core Decision Branches
 
@@ -89,9 +92,13 @@ Every plan must include:
    - any spawned follow-up tickets
    - whether it is blocked in `building/` or returned to `review/`
 
+The selected ticket in `tickets/review/` is the default home for this plan. Write the plan into that ticket first. Chat should then summarize the same plan concisely and ask for approval.
+Use the canonical `Implementation Plan` subsections from the ticket template rather than ad hoc headings.
+
 ## Efficiency Rules
 
 - Lead with the approval surface, not the appendix.
+- Keep the ticket authoritative; avoid writing a richer plan in chat than in the file.
 - Prefer symbols and compact labels over repeated prose.
 - Reuse existing modules; justify every new file or abstraction in one line.
 - Keep deeper implementation detail below the top section.

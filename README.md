@@ -61,6 +61,7 @@ flowchart TD
 
     H --> R
     R --> I
+    I --> R
     F --> I
     I --> BLD
     H --> IDX
@@ -124,11 +125,12 @@ flowchart TD
    - clarify requirements and first SLC slice
    - output: `docs/prd.md`
 3. `spec-to-ticket`
-   - convert one slice into executable raw tickets
+   - convert one multi-ticket slice into executable raw tickets
    - output: `tickets/todo/*`
 4. `tech-impl-plan`
-   - refine one ticket in `tickets/review/` until it is approval-ready
-   - output: updated ticket file + plan in chat or markdown
+   - refine one selected ticket in `tickets/review/` until it is approval-ready
+   - if the ticket is still in `tickets/todo/`, promote it to `tickets/review/` first
+   - output: implementation plan written into the ticket, with chat used only as a compact summary + approval ask
 5. build
    - implement the approved ticket from `tickets/building/`
    - output: code + tests + ticket updates
@@ -169,11 +171,20 @@ flowchart TD
 ## Routing
 
 - unclear feature request -> `prd`
-- accepted PRD, need slice -> `spec-to-ticket`
+- accepted PRD/spec, need one multi-ticket slice -> `spec-to-ticket`
+- small concrete change -> create/select ticket directly, then run `tech-impl-plan`
+- product truth is stable but the ticket boundary is still fuzzy -> fill `Scope Decision` in the ticket and stop there
 - picked ticket needs planning/approval -> `tech-impl-plan` in `tickets/review/`
 - building user-visible UI -> `qa-tester` and `visual-qa`
 - repro bug with unclear cause -> `runtime-debugging`
 - final quality pass -> `code-review`
+
+## Planning Layers
+
+- `docs/prd.md` is product truth. Use it when the product direction, audience, JTBD, or phase intent is missing or changing.
+- `docs/specs/*` is slice truth. Use it when one approved phase needs to be broken into multiple coordinated tickets.
+- `tickets/*` is execution truth. Use it for concrete one-loop work and as the default home for implementation plans.
+- The system should prefer the smallest sufficient layer. Do not force PRD/spec work for a small concrete ticket.
 
 ## Ticket Contract
 
@@ -186,9 +197,22 @@ Follow the canonical ticket shape in [tickets/templates/ticket.md](/home/kenjipc
 
 In practice:
 
+- review tickets should carry the scope decision and implementation plan
+- non-UI tickets should carry an `Execution Proof` block for open/prove/inspect/artifact paths
 - UI-bearing tickets carry a compact `Agent Contract`
-- tickets carry minimal status/control fields for board movement
+- tickets carry minimal status/control fields for board movement, including `parallelizable after` when relevant
 - tickets end with a compact `User Evidence` packet for human review
+
+## Final Handoff
+
+The default closeout packet should be:
+
+- `Session recap`
+- `Outcome`
+- `Current ticket state`
+- `Only if applicable: blocker or spawned follow-up`
+
+The system should not add speculative “next things I could also do” unless they are explicitly requested or required by the ticket state.
 
 Planning, build, and QA should all work from that one ticket file instead of restating ticket structure elsewhere.
 
