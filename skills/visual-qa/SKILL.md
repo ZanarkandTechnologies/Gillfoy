@@ -17,8 +17,8 @@ Use this when:
 - you need a visual judgment against ticket intent and `docs/TASTE.md`
 - you are debugging visual regressions, layout drift, or state/render mismatches
 
-This skill does not own browser orchestration or ticket write-back.
-It owns screen judgment only.
+This skill does not own browser orchestration or primary evidence capture.
+It is the separate evidence-review instance for visual judgment only.
 
 ## Core principle
 
@@ -34,7 +34,7 @@ If the ticket is underspecified, fail early instead of reward-hacking a route.
 Before judging any screen, read:
 
 1. the active ticket in `tickets/building/` or the delegated ticket file/section,
-2. the ticket's UI contract (`Key screens/states`, `Taste refs`, `Expected artifacts`),
+2. the ticket's UI contracts (`Access Contract`, `Proof Contract`, `Evidence Review`) plus `Key screens/states` and `Taste refs`,
 3. the ticket `Evidence checklist`, if present,
 4. `docs/TASTE.md` when UI taste or layout quality is in scope.
 
@@ -155,6 +155,7 @@ The top-level skill should explain what to judge, not every browser command need
 
 Evidence capture should follow the visual QA runbooks in `references/workflows.md`.
 Use the ticket's declared screens/states to decide what to capture; do not rely on ad-hoc exploration alone.
+When another agent captured the evidence first, review that artifact pack instead of silently recapturing different evidence.
 
 ## Diff report format (required)
 

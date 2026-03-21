@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "strict": true,
+    "noImplicitOverride": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "declaration": false,
+    "outDir": "dist"
+  },
+  "include": [
+    "src/global.d.ts",
+    "src/testability-contract.ts",
+    "src/testability-contract-cli.ts",
+    "src/session-board/**/*.ts",
+    "src/session-board-cli.ts",
+    "test/testability-contract.test.ts",
+    "test/session-board*.ts"
+  ]
+}

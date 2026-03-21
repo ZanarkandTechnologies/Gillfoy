@@ -74,9 +74,10 @@ Avoid:
 Before edits:
 
 - read nearby specs / PRDs / module docs
+- read `docs/TESTING.md` when present for project-level autonomous proof and instrumentation constraints
 - search for existing patterns
 - inspect affected files + interfaces
-- bootstrap from `tickets/review/*`, `tickets/building/*`, `tickets/todo/*`, `docs/prd.md`, `docs/specs/*`, `docs/MEMORY.md`, `docs/TROUBLES.md`
+- bootstrap from `tickets/review/*`, `tickets/building/*`, `tickets/todo/*`, `docs/prd.md`, `docs/specs/*`, `docs/TESTING.md`, `docs/MEMORY.md`, `docs/TROUBLES.md`
 
 No blind edits.
 
@@ -94,11 +95,18 @@ Do not create a larger planning artifact if a smaller one is enough.
 - build = work from `tickets/building/` until implementation, QA, evidence, and review are complete
 - staged runners such as `brute` may automate build-mode phase transitions, but durable state stays in the active ticket, not only in sidecar files
 
+Brute mode rules:
+
+- exactly one non-`.gitkeep` ticket should be active in `tickets/building/` when `brute` runs
+- the selected building ticket is the only in-scope execution unit for that run
+- `brute` must classify failures as `scope blocker` vs `execution blocker`, not blur them together
+
 Planning handoff rule:
 
 - the selected ticket in `tickets/review/` is the default home for scope decisions and the technical implementation plan
 - if the chosen ticket is still in `tickets/todo/`, move it to `tickets/review/` before writing a full `tech-impl-plan`
 - chat should summarize that ticket and ask for approval, not become the competing source of truth
+- once a ticket is approved for execution, treat in-scope user feedback as authorization to edit; do not reply with "if you want I can change it" when the user is clearly asking for correction
 
 ## Core Rules
 
@@ -108,7 +116,10 @@ Planning handoff rule:
 - no speculative abstractions
 - MVP first: 1 -> 10 -> 100
 - front-load autonomous proof surfaces: open, seed/reset, inspect, assert, artifact path
+- require a named primary test method per ticket, not just generic verification language
+- keep evidence capture separate from evidence review when judgment is subjective or visual
 - prefer explicit ticket fields over comment-only conventions
+- user complaints about the current output are correction requests by default; fix first, explain briefly only when useful
 
 ## Module Scaffolding
 
@@ -253,6 +264,7 @@ Agents must:
 - keep the selected ticket as the source of truth for scope decisions and implementation plan
 - keep runner policy and durable phase state in the ticket; sidecars may cache volatile metadata only
 - use `Scope Decision` as the valid stopping point when the ticket is not yet ready for full tech impl planning
+- keep an `Operator Resume` packet current enough that a returning user can understand the ticket quickly
 - record blockers in the ticket
 - create linked follow-up tickets when scope splits or new work is discovered
 - update `tickets/INDEX.md` when a ticket changes state
@@ -261,6 +273,11 @@ Blocker rule:
 
 - execution blocker -> keep ticket in `tickets/building/` and record blocker
 - planning/scope blocker -> move ticket back to `tickets/review/`
+- do not treat optional follow-up ideas as blockers
+
+Brute completion rule:
+
+- `brute` should not end `done` unless proof, review status, and operator resume fields are updated in the ticket
 
 ## Final Handoff
 

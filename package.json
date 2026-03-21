@@ -1,0 +1,12 @@
+{
+  "name": "cursor-session-board",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "rm -rf dist && tsc -p tsconfig.session-board.json",
+    "check:testability-contract": "tsc -p tsconfig.json && node dist/src/testability-contract-cli.js",
+    "typecheck": "tsc -p tsconfig.session-board.json --noEmit",
+    "session-board": "rm -rf dist && tsc -p tsconfig.session-board.json && node dist/src/session-board-cli.js",
+    "test": "rm -rf dist && tsc -p tsconfig.session-board.json && node --test dist/test/session-board*.test.js"
+  }
+}

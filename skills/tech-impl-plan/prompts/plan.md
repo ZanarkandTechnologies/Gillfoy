@@ -6,11 +6,12 @@ Keep this focused on the next commit and the next ticket move, not on implementa
 -->
 
 0a. Study `@docs/prd.md`.
-0b. Study `@docs/specs/*`.
-0c. Study the selected ticket in `@tickets/review/*`. If the target ticket is still in `@tickets/todo/*`, move it to `review/` before writing the full plan.
-0d. Study `@docs/MEMORY.md`.
-0e. Study `@docs/TROUBLES.md` if present.
-0f. Search the codebase first.
+0b. Study `@docs/TESTING.md` when present.
+0c. Study `@docs/specs/*`.
+0d. Study the selected ticket in `@tickets/review/*`. If the target ticket is still in `@tickets/todo/*`, move it to `review/` before writing the full plan.
+0e. Study `@docs/MEMORY.md`.
+0f. Study `@docs/TROUBLES.md` if present.
+0g. Search the codebase first.
 
 Plan only. Target the next commit.
 
@@ -54,6 +55,8 @@ Requirements:
 - `Core Flow` defaults to short pseudocode.
 - Diagram only for new or risky paths.
 - Proof must use concrete checks, not generic test categories.
+- update the ticket's `Test Method` section with the primary proof approach and why it is deterministic enough for this ticket.
+- when the ticket is UI-bearing or workflow-heavy, keep `Access Contract`, `Proof Contract`, and `Evidence Review` distinct instead of collapsing them into one vague QA block.
 - `Plan Review` must state:
   - which references were actually used,
   - whether scope is still one commit,

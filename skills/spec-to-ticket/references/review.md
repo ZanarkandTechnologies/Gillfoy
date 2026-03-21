@@ -10,7 +10,8 @@ If any answer is weak, tighten the tickets first.
 - Are dependencies explicit and ordered cleanly?
 - If a ticket uses a library, package, service, or tool, is that dependency named where relevant?
 - Do acceptance criteria explain the minimum necessary change clearly?
-- For UI-bearing tickets, do `Agent Contract` and `Evidence checklist` make QA realistic?
+- Does each ticket declare a concrete primary `Test method`, not just a generic "verify" step?
+- For UI-bearing tickets, do `Access Contract`, `Proof Contract`, `Evidence checklist`, and `Evidence Review` make QA realistic?
 - Does each non-trivial ticket declare a usable `Test hook`, not just vague “verify manually” language?
 - If delegation is expected, does `Delegate with` point to the exact ticket path/section and write-back target?
 - For UI-bearing tickets, is the intended layout or screen structure clear enough to review later without guessing?
@@ -31,7 +32,9 @@ If any answer is weak, tighten the tickets first.
 - one ticket clearly hides multiple build loops
 - dependency order is implied instead of stated
 - a UI ticket says "verify in browser" without access/stabilization details
+- a UI ticket can be reached but still has no clear pass/fail rule or evidence reviewer
 - a non-trivial ticket needs deterministic setup but has no usable `Test hook`
 - acceptance criteria are generic, fluffy, or not observable
+- the primary test method is omitted or too vague to guide deterministic proof
 - important dependencies or packages are assumed but never named
 - delegated work is described only in prose without an exact ticket reference

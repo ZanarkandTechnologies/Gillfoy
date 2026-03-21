@@ -57,6 +57,17 @@ Keep it compact: Pitch, B -> A, Delta, Core Flow, Proof, Plan Review, Ask, Deleg
 - [ ] AC-1:
 - [ ] AC-2:
 
+## Test Method
+
+<!--
+Every ticket must say how the feature will be proved before build starts.
+If this is vague, agents will reward-hack browser steps instead of producing deterministic evidence.
+-->
+
+- Primary method: unit | integration | e2e | visual diff | runtime log assertion | eval | mixed
+- Why this proves the feature:
+- Required instrumentation:
+
 ## Executor Policy
 
 <!--
@@ -84,20 +95,32 @@ The runner may mirror this into a sidecar file, but the ticket remains canonical
 - last prompt:
 - last result:
 
-## Agent Contract
+## Access Contract
 
 <!--
-UI-only execution contract.
-This block exists so build and QA do not have to guess how to open, stabilize, inspect, and verify the feature.
+Access/setup contract.
+This block exists so build and QA do not have to guess how to reach and inspect the feature before proof begins.
 -->
 
 - Open:
 - Test hook:
 - Stabilize:
 - Inspect:
+- Evidence capture:
 - Key screens/states:
 - Taste refs:
-- Expected artifacts:
+
+## Proof Contract
+
+<!--
+Proof/judgment contract.
+This block states what actually decides pass/fail after access/setup is solved.
+-->
+
+- Assertion path:
+- Artifact destination:
+- Pass rule:
+- Evidence review instance:
 - Delegate with: delegated agent/skill + ticket path/section + expected artifact + write-back target
 
 ## Execution Proof
@@ -123,6 +146,17 @@ Keep this short and concrete so QA knows exactly which artifacts must exist befo
 - [ ] Snapshot:
 - [ ] QA report linked:
 
+## Evidence Review
+
+<!--
+Evidence review should be a separate review instance from capture/execution whenever judgment is required.
+-->
+
+- Reviewer:
+- Input artifacts:
+- Verdict artifact:
+- Write-back target:
+
 ## Build Notes
 
 ## Review Findings
@@ -135,6 +169,17 @@ Keep this short and concrete so QA knows exactly which artifacts must exist befo
 
 - exit status: active | done | blocked
 - exit detail:
+
+## Operator Resume
+
+<!--
+Compact human resume packet for staged runners such as `brute`.
+Keep this current enough that a returning operator can recover context quickly.
+-->
+
+- Session recap:
+- What happened:
+- What remains:
 
 ## QA Reconciliation
 - AC-1: PASS | FAIL | NOT PROVABLE

@@ -27,8 +27,9 @@ Given `docs/specs/*.md`, pick exactly one approved multi-ticket slice and conver
 6. If the slice includes any UI, the ticket must define agent testability and QA shape before build starts.
 7. If a UI flow is hard for an agent to access or stabilize, add testability instrumentation work into the slice instead of leaving QA to improvise.
 8. Every non-trivial ticket should declare a `Test hook`; if none is needed, say `none needed` explicitly.
-9. Mark dependency edges and note which tickets are parallelizable once their prerequisites are met.
-10. Do not use this skill when the work is already small and concrete enough for direct ticket -> `tech-impl-plan`.
+9. Every ticket should declare a primary `Test method` before build starts.
+10. Mark dependency edges and note which tickets are parallelizable once their prerequisites are met.
+11. Do not use this skill when the work is already small and concrete enough for direct ticket -> `tech-impl-plan`.
 
 ## Inputs
 
@@ -42,36 +43,46 @@ Given `docs/specs/*.md`, pick exactly one approved multi-ticket slice and conver
 - `tickets/todo/*.md` ticket files with:
   - goal
   - acceptance criteria
+  - `Test method`
   - dependencies
   - `parallelizable after`
   - assignee
   - required evidence/backpressure
   - `Execution Proof` for non-UI tickets
   - control fields for state movement
-  - for UI-bearing tickets: `Agent Contract` + `Evidence checklist`
+  - for UI-bearing tickets: `Access Contract` + `Proof Contract` + `Evidence checklist` + `Evidence Review`
   - `User Evidence` placeholders
 
 ## UI-bearing Ticket Contract
 
 <!--
-The Agent Contract is the bridge between planning and autonomous execution.
-If this block is vague, build and QA will reward-hack route completion instead of proving the intended UI.
+Access and proof should be separate.
+If access is vague, QA cannot reach the feature; if proof is vague, QA can reach it but still reward-hack the verdict.
 -->
 
-For any ticket that changes UI, canvas rendering, user-visible flows, or browser interaction, add a compact `Agent Contract` block.
+For any ticket that changes UI, canvas rendering, user-visible flows, or browser interaction, add compact `Access Contract`, `Proof Contract`, and `Evidence Review` blocks.
 
-Required fields:
+`Access Contract` required fields:
 
 - `Open`: launch path or command, plus stable route/deeplink if available
 - `Test hook`: the cheapest deterministic proof surface, such as a CLI command, seed/reset path, debug route, fixture loader, sanity script, or `none needed`
 - `Stabilize`: reset/seed path plus shortcuts/debug controls if determinism matters
 - `Inspect`: required hooks, selectors, overlays, or DOM mirrors
+- `Evidence capture`: how artifacts are gathered once the target state is reached
 - `Key screens/states`: the important surfaces QA must reach and compare
 - `Taste refs`: the relevant visual doctrine from `docs/TASTE.md`, plus any local exception
-- `Expected artifacts`: screenshots, snapshots, traces, or other proof
+
+`Proof Contract` required fields:
+
+- `Assertion path`: the source of truth, such as visual diff, DOM/state assertion, runtime log assertion, or mixed
+- `Artifact destination`: where proof artifacts are stored
+- `Pass rule`: what decides pass/fail once evidence exists
+- `Evidence review instance`: the separate judgment surface, for example `visual-qa`, `code-review`, or human review
 - `Delegate with`: ticket ID, ticket file path/section, recommended assignee, expected output artifact
 
-Add a compact `Evidence checklist` below the `Agent Contract` for UI-bearing tickets.
+`Test method` still belongs in the top-level ticket section and should explain why the chosen proof path is deterministic enough.
+
+Add a compact `Evidence checklist` plus `Evidence Review` block below the access/proof contract for UI-bearing tickets.
 
 <!--
 Evidence should be declared up front so QA knows which artifacts must exist before the ticket can close.
@@ -108,13 +119,14 @@ pick one slice, split it, add proof/testability, then write real ticket files in
 1. Read `docs/specs/*.md` and pick exactly one SLC slice.
 2. Split the slice into dependency-ordered tickets.
 3. For each ticket, write concrete acceptance criteria, control fields, evidence requirements, dependencies, `parallelizable after`, and a `Test hook`.
-4. For each UI-bearing ticket, add a compact `Agent Contract` block plus `Evidence checklist`.
-5. For each non-UI ticket, add `Execution Proof` with open/prove, seed/reset, inspect/assert, and artifact path.
-6. If agentic testing looks weak, add instrumentation work into the ticket now instead of hoping QA can discover a path later.
-7. Note which tickets can run in parallel after dependencies are satisfied.
-8. If the slice is too large, split it into multiple smaller tickets in `tickets/todo/` immediately.
-9. Write the finished raw tickets into `tickets/todo/` using the ticket template.
-10. Before handoff, read `references/review.md` and tighten the ticket set until it passes those checks.
+4. For each ticket, declare the primary `Test method` and the instrumentation it depends on.
+5. For each UI-bearing ticket, add compact `Access Contract`, `Proof Contract`, `Evidence checklist`, and `Evidence Review` blocks.
+6. For each non-UI ticket, add `Execution Proof` with open/prove, seed/reset, inspect/assert, and artifact path.
+7. If agentic testing looks weak, add instrumentation work into the ticket now instead of hoping QA can discover a path later.
+8. Note which tickets can run in parallel after dependencies are satisfied.
+9. If the slice is too large, split it into multiple smaller tickets in `tickets/todo/` immediately.
+10. Write the finished raw tickets into `tickets/todo/` using the ticket template.
+11. Before handoff, read `references/review.md` and tighten the ticket set until it passes those checks.
 
 ## Top 3 Gotchas
 

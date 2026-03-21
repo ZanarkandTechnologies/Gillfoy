@@ -9,6 +9,7 @@ If any answer is weak, tighten the plan first.
 - Did the plan actually use the right references: PRD, specs, ticket, memory, troubles, code?
 - Does `B -> A` explain the change clearly near the top?
 - Does `Core Flow` show the minimum code or pseudocode needed to make the approach believable?
+- Does the plan name the primary test method and explain why it is deterministic enough for this ticket?
 - Are the proof points concrete and observable?
 - Are risk and rollback clear enough for the size of the change?
 - Is the plan concise enough for fast approval without hiding critical detail?
@@ -21,6 +22,7 @@ If any answer is weak, tighten the plan first.
 - Are we saying too little for a risky or unfamiliar path?
 - Would a reviewer understand how the change happens without reading an appendix?
 - If the ticket depends on a `Test hook`, is that hook clearly good enough to support deterministic proof before build starts?
+- If evidence review matters, does the plan keep access/capture separate from pass/fail judgment?
 
 ## Fail If
 
