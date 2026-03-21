@@ -92,6 +92,7 @@ Do not create a larger planning artifact if a smaller one is enough.
 
 - planning = work from `tickets/review/` until user approves
 - build = work from `tickets/building/` until implementation, QA, evidence, and review are complete
+- staged runners such as `brute` may automate build-mode phase transitions, but durable state stays in the active ticket, not only in sidecar files
 
 Planning handoff rule:
 
@@ -250,6 +251,7 @@ Agents must:
 - follow the canonical ticket shape in `tickets/templates/ticket.md`
 - update the ticket file, not just chat
 - keep the selected ticket as the source of truth for scope decisions and implementation plan
+- keep runner policy and durable phase state in the ticket; sidecars may cache volatile metadata only
 - use `Scope Decision` as the valid stopping point when the ticket is not yet ready for full tech impl planning
 - record blockers in the ticket
 - create linked follow-up tickets when scope splits or new work is discovered

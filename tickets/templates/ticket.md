@@ -57,6 +57,33 @@ Keep it compact: Pitch, B -> A, Delta, Core Flow, Proof, Plan Review, Ask, Deleg
 - [ ] AC-1:
 - [ ] AC-2:
 
+## Executor Policy
+
+<!--
+Optional machine-readable runner policy.
+Keep durable workflow policy in the ticket; put only volatile runtime metadata in sidecars.
+-->
+
+```yaml
+executor: brute
+codex_mode: full-auto
+max_iterations: 5
+max_review_loops: 3
+```
+
+## Runtime State
+
+<!--
+Durable execution state for staged runners such as `brute`.
+The runner may mirror this into a sidecar file, but the ticket remains canonical.
+-->
+
+- current phase: build | prove | review | fix-review | done | blocked
+- iterations used: 0
+- review loops used: 0
+- last prompt:
+- last result:
+
 ## Agent Contract
 
 <!--
@@ -97,6 +124,17 @@ Keep this short and concrete so QA knows exactly which artifacts must exist befo
 - [ ] QA report linked:
 
 ## Build Notes
+
+## Review Findings
+
+- review status: not-reviewed | passed | failed
+- in-scope:
+- follow-up:
+
+## Exit Reason
+
+- exit status: active | done | blocked
+- exit detail:
 
 ## QA Reconciliation
 - AC-1: PASS | FAIL | NOT PROVABLE

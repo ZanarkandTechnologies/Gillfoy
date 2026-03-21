@@ -198,8 +198,10 @@ Follow the canonical ticket shape in [tickets/templates/ticket.md](/home/kenjipc
 In practice:
 
 - review tickets should carry the scope decision and implementation plan
+- tickets may carry a compact `Executor Policy` plus `Runtime State` when a staged runner such as `brute` is used
 - non-UI tickets should carry an `Execution Proof` block for open/prove/inspect/artifact paths
 - UI-bearing tickets carry a compact `Agent Contract`
+- review-oriented automation should write findings into `Review Findings` and terminal status into `Exit Reason`
 - tickets carry minimal status/control fields for board movement, including `parallelizable after` when relevant
 - tickets end with a compact `User Evidence` packet for human review
 
