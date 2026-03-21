@@ -12,7 +12,7 @@ One-time setup for new projects. This skill scaffolds a docs-first workflow and 
 
 - `PROJECT_RULES.md` (project-specific stack + commands + conventions)
 - `AGENTS.md` (operational contract loaded every loop)
-- `docs/` state (`prd.md`, `specs/`, `HISTORY.md`, `MEMORY.md`, `TASTE.md`, `TROUBLES.md`)
+- `docs/` state (`prd.md`, `specs/`, `TESTING.md`, `HISTORY.md`, `MEMORY.md`, `TASTE.md`, `TROUBLES.md`)
 - `tickets/` board (`todo/`, `review/`, `building/`, `done/`, `templates/`, `INDEX.md`)
 
 ## Common Stack Setup
@@ -52,19 +52,21 @@ bash ~/.cursor/skills/init-project/scripts/bootstrap.sh
 2. Copy `references/AGENTS_TEMPLATE.md` -> `AGENTS.md`.
 3. Create docs state:
    - `mkdir -p docs/specs`
-   - `touch docs/prd.md docs/HISTORY.md docs/MEMORY.md docs/TASTE.md docs/TROUBLES.md`
+   - `touch docs/prd.md docs/TESTING.md docs/HISTORY.md docs/MEMORY.md docs/TASTE.md docs/TROUBLES.md`
 4. Create ticket board:
    - `mkdir -p tickets/todo tickets/review tickets/building tickets/done tickets/templates`
    - copy the ticket template into `tickets/templates/`
    - create `tickets/INDEX.md`
 5. Use `prd` skill for requirements and PRD authoring (HITL loop).
 6. Use `spec-to-ticket` skill to convert one SLC slice into raw tickets in `tickets/todo/`.
+7. Fill `docs/TESTING.md` before feature work so the main app has an explicit autonomous proof strategy and known instrumentation hooks.
 
 ## Why This Structure
 
 - `PROJECT_RULES.md` centralizes stack details and backpressure commands.
 - `AGENTS.md` stays operational and lightweight because it is loaded every loop.
 - `docs/` is the canonical project state for planning and execution.
+- `docs/TESTING.md` is the project-level autonomous testing contract, so the app's open path, reset path, inspect hooks, and artifact capture are defined before tickets depend on them.
 - `docs/TASTE.md` is the canonical visual doctrine, so tickets and QA can reference one shared style source.
 - `docs/TROUBLES.md` is the append-only operator feedback log for repeated misses, failed attempts, and correction patterns that should feed future system improvements.
 - `tickets/` is the canonical execution board, so planning, build, and QA work from one file per ticket.
@@ -76,6 +78,7 @@ bash ~/.cursor/skills/init-project/scripts/bootstrap.sh
 The generated planning flow should follow these defaults:
 
 - Context first before edits (specs, rules, related files, interfaces, memory state).
+- Autonomous proof first for product work: define how an agent will reliably test the main app before feature tickets start.
 - Plan before build for feature/refactor work, with human confirmation before execution.
 - Include a high-level change preview in plans (ASCII/mermaid + critical touchpoint stubs).
 - Use conditional delegation only; avoid specialized QA delegation for docs-only/rule-text-only work.
@@ -98,5 +101,6 @@ The generated planning flow should follow these defaults:
 
 - [PROJECT_RULES_TEMPLATE.md](references/PROJECT_RULES_TEMPLATE.md) - Project rules template.
 - [AGENTS_TEMPLATE.md](references/AGENTS_TEMPLATE.md) - AGENTS template.
+- [TESTING_TEMPLATE.md](references/TESTING_TEMPLATE.md) - Autonomous testing contract template.
 - [TASTE_TEMPLATE.md](references/TASTE_TEMPLATE.md) - Shared visual doctrine template.
 - `tickets/templates/ticket.md` - Filesystem ticket template.

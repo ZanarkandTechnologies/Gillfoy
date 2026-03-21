@@ -33,6 +33,7 @@
 - **Constraints**: Security/privacy, performance/latency, platforms, budget/time, legal/compliance.
 - **Risks**: Top 1-3 unknowns that could change the approach.
 - **Backpressure**: What evidence is required to ship (tests, QA, perf checks, demos)?
+- **Autonomous proof**: How will an agent deterministically test the main app, and what instrumentation must exist first?
 
 ### Interview prompts (ask these before writing specs/tickets)
 
@@ -50,6 +51,8 @@ Ask only what changes implementation decisions; default to 8-12 questions total:
 10. What existing system constraints do we inherit (stack, hosting, auth, conventions)?
 11. What is the **rollout** expectation (internal only, beta, public; migration/backfill)?
 12. What are you most worried we'll get wrong?
+13. How should an agent prove the main app works end-to-end without relying on vague browser exploration alone?
+14. What shortcuts, deep links, fixtures, overlays, logs, or comparable artifacts must exist for that proof?
 
 ### Writing `docs/prd.md` (recommended structure)
 
@@ -62,6 +65,7 @@ Ask only what changes implementation decisions; default to 8-12 questions total:
 - **Constraints**
 - **Risks / unknowns**
 - **Backpressure / evidence to ship**
+- **Autonomous test strategy**
 
 ### Acceptance criteria rules
 

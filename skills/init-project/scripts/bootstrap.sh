@@ -82,7 +82,8 @@ copy_file "${REF_DIR}/PROJECT_RULES_TEMPLATE.md" "${TARGET_DIR}/PROJECT_RULES.md
 
 mkdir -p "${TARGET_DIR}/docs/specs"
 
-write_file_if_missing "${TARGET_DIR}/docs/prd.md" "# PRD\n\n## Problem / Context\n\n## Audience\n\n## JTBD\n\n## SLC Slice\n\n## Goals\n\n## Non-Goals\n\n## Constraints\n\n## Risks\n\n## Backpressure\n"
+write_file_if_missing "${TARGET_DIR}/docs/prd.md" "# PRD\n\n## Problem / Context\n\n## Audience\n\n## JTBD\n\n## SLC Slice\n\n## Goals\n\n## Non-Goals\n\n## Functional Requirements\n\n## Autonomous Test Strategy\n\n## Constraints\n\n## Risks\n\n## Backpressure / Evidence to Ship\n"
+copy_file "${REF_DIR}/TESTING_TEMPLATE.md" "${TARGET_DIR}/docs/TESTING.md"
 write_file_if_missing "${TARGET_DIR}/docs/HISTORY.md" "# HISTORY\n\nFormat:\nYYYY-MM-DD HH:mm Z | TYPE | MEM-#### | tags | text\n\n"
 write_file_if_missing "${TARGET_DIR}/docs/MEMORY.md" "# MEMORY\n\nCurated durable constraints promoted from HISTORY.\n\n"
 write_file_if_missing "${TARGET_DIR}/docs/TROUBLES.md" "# TROUBLES\n\nAppend-only log for repeated failures, user corrections, and preventable misses.\n\nFormat:\nYYYY-MM-DD HH:mm Z | area,tags | request | miss | correction | prevention\n\nPromote only durable lessons from here into docs/MEMORY.md or the relevant skill/contract.\n\n"
@@ -97,6 +98,7 @@ echo ""
 echo "Done."
 echo "Next:"
 echo "  - Fill in PROJECT_RULES.md and AGENTS.md."
+echo "  - Fill in docs/TESTING.md before feature work so the main app has a deterministic agent test path."
 echo "  - Refine docs/TASTE.md so UI tickets and QA share one visual doctrine."
 echo "  - Use docs/TROUBLES.md for repeated misses; promote recurring lessons back into the system."
 echo "  - Use prd + spec-to-ticket skills to author docs/specs and create tickets/todo/*."

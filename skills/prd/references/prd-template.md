@@ -55,11 +55,19 @@ When [context], I want to [action], so I can [outcome].
 - [ ] Observable criterion
 - [ ] Error-path criterion
 - [ ] Typecheck passes
-- [ ] [UI stories only] Verify in browser using dev-browser skill
+- [ ] [UI stories only] Prove via the declared autonomous test method and evidence artifacts
 
 ## Functional Requirements
 - FR-1: ...
 - FR-2: ...
+
+## Autonomous Test Strategy
+- Main app proof method:
+- Why this method is deterministic enough:
+- Open/stabilize/inspect/assert path:
+- Required instrumentation before feature build:
+- Evidence artifacts:
+- Evidence review path:
 
 ## Constraints
 - Security/privacy:
@@ -74,6 +82,7 @@ When [context], I want to [action], so I can [outcome].
 - Tests:
 - QA:
 - Perf checks:
+- Autonomous proof:
 ```
 
 ## Quality Checklist

@@ -16,11 +16,12 @@ Use for implementation planning after the ticket boundary is already credible. O
 ## Core Prompt Wording
 
 0a. Study `@docs/prd.md` for outcomes + constraints.  
-0b. Study `@docs/specs/*` for spec truth.  
-0c. Study the selected ticket in `@tickets/review/*`. If the target ticket is still in `@tickets/todo/*`, move it to `review/` before writing the full plan.  
-0d. Study `@docs/MEMORY.md` for durable constraints.  
-0e. Study `@docs/TROUBLES.md` for repeated planning/execution misses when present.  
-0f. Search the codebase before assuming anything is missing.
+0b. Study `@docs/TESTING.md` for the main app's autonomous proof path and instrumentation baseline when present.  
+0c. Study `@docs/specs/*` for spec truth.  
+0d. Study the selected ticket in `@tickets/review/*`. If the target ticket is still in `@tickets/todo/*`, move it to `review/` before writing the full plan.  
+0e. Study `@docs/MEMORY.md` for durable constraints.  
+0f. Study `@docs/TROUBLES.md` for repeated planning/execution misses when present.  
+0g. Search the codebase before assuming anything is missing.
 
 ## First-Load Contract
 
@@ -75,6 +76,7 @@ Every plan must include:
    - 6-12 lines of pseudocode
    - optional diagram only for new/risky paths
 5. `Proof`
+   - chosen `Test method`
    - 2-4 concrete checks
    - main risk / rollback note
 6. `Plan Review`

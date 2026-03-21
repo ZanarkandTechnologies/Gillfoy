@@ -10,6 +10,7 @@ If any answer is weak, tighten the PRD first.
 - Is the proposed slice actually helpful, not just interesting to build?
 - Does the PRD explain why this is the right first slice instead of a bigger or different one?
 - Are constraints, risks, and non-goals concrete enough to steer implementation decisions?
+- Does the PRD define how an agent will deterministically prove the main app or slice, not just how a human might click around?
 
 ## Ask If Relevant
 
@@ -24,3 +25,4 @@ If any answer is weak, tighten the PRD first.
 - the slice is too broad to guide the next step cleanly
 - success is described only in technical terms, not user terms
 - the document reads like implementation notes instead of product intent
+- autonomous proof is missing for a flow that will later depend on browser or runtime testing

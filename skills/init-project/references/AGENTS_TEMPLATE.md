@@ -18,6 +18,7 @@ This file is loaded every loop. Keep it operational and project-specific.
 
 - PRD: `docs/prd.md`
 - Specs: `docs/specs/*`
+- Testing: `docs/TESTING.md`
 - History: `docs/HISTORY.md`
 - Memory: `docs/MEMORY.md`
 - Troubles: `docs/TROUBLES.md`
@@ -28,6 +29,7 @@ This file is loaded every loop. Keep it operational and project-specific.
 ## Context First (Always)
 
 - Read relevant specs/PRD before proposing edits.
+- Read `docs/TESTING.md` before planning feature work so proof surfaces and instrumentation constraints are known.
 - Read nearest module `README.md` + `AGENTS.md`.
 - Search for existing patterns and inspect related files.
 - Identify affected interfaces first.
@@ -49,6 +51,7 @@ This file is loaded every loop. Keep it operational and project-specific.
 - Start smallest possible slice first.
 - Ramp intentionally: `1 -> 10 -> 100`.
 - Use dry-runs/checkpoints for risky or stateful operations.
+- If an agent cannot deterministically prove a flow yet, add instrumentation work before feature work closes.
 
 ## Notes
 

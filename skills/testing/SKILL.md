@@ -10,9 +10,10 @@ Use this skill as a lightweight router to testing guidance across domains.
 
 ## Core Pattern
 1. Classify the system (CRUD web / API / AI / voice / video / canvas / multiplayer).
-2. Pick backpressure (tests, typecheck, lint, build, evals).
-3. Choose tools (Playwright where it fits; otherwise domain harnesses).
-4. Capture evidence (logs, screenshots, fixtures, traces).
+2. Decide the primary autonomous `Test method` for the feature before implementation.
+3. Pick backpressure (tests, typecheck, lint, build, evals).
+4. Choose tools (Playwright where it fits; otherwise domain harnesses).
+5. Capture evidence (logs, screenshots, fixtures, traces).
 
 ## Domain-Specific Testing
 Each domain skill may include `references/how-to-test.md`. This index should list them:
@@ -29,4 +30,3 @@ Each domain skill may include `references/how-to-test.md`. This index should lis
 - [video-app.md](references/video-app.md) - Playback/encoding, bandwidth adaptation, quality.
 - [canvas-app.md](references/canvas-app.md) - Rendering correctness, perf, input events.
 - [multiplayer-2p-game.md](references/multiplayer-2p-game.md) - Sync, determinism, cheating, latency.
-

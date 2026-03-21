@@ -21,6 +21,8 @@ Playwright is not sufficient alone when:
 - Performance budgets and timing are core requirements.
 
 ### Step 2: Pick backpressure types (mix as needed)
+First name the primary proof method for the ticket so implementation knows what must be instrumented.
+
 - **Unit tests**: deterministic logic, pure functions, small modules.
 - **Integration tests**: DB + backend + services (real or test containers).
 - **Contract tests**: API schema/shape compatibility across services.
@@ -34,4 +36,3 @@ Playwright is not sufficient alone when:
 - For UI: Playwright traces/screenshots for failing cases.
 - For AI: frozen eval sets + acceptance thresholds + drift monitoring.
 - For realtime/media: latency histograms + quality metrics + device matrix notes.
-

@@ -5,13 +5,14 @@ Copy and paste this into a new session to start a coding implementation planning
 ---
 
 0a. Study `@docs/prd.md` to understand audience, outcomes, and constraints.
-0b. Study `@docs/specs/*` to learn the application specifications.
-0c. Study the active ticket in `@tickets/review/*` first; if none exists, inspect `@tickets/todo/*`.
-0d. Study `@docs/MEMORY.md` for durable technical constraints.
-0e. Study `@docs/TROUBLES.md` for repeated failure patterns that should be avoided in this slice.
-0f. If UI or UX is in scope, study `@docs/TASTE.md` for shared visual doctrine.
-0g. Search the codebase before assuming anything is missing.
-0h. Confirm affected interfaces and nearest module `README.md` + `AGENTS.md` before proposing changes.
+0b. Study `@docs/TESTING.md` to understand the project's autonomous proof path, instrumentation hooks, and artifact expectations.
+0c. Study `@docs/specs/*` to learn the application specifications.
+0d. Study the active ticket in `@tickets/review/*` first; if none exists, inspect `@tickets/todo/*`.
+0e. Study `@docs/MEMORY.md` for durable technical constraints.
+0f. Study `@docs/TROUBLES.md` for repeated failure patterns that should be avoided in this slice.
+0g. If UI or UX is in scope, study `@docs/TASTE.md` for shared visual doctrine.
+0h. Search the codebase before assuming anything is missing.
+0i. Confirm affected interfaces and nearest module `README.md` + `AGENTS.md` before proposing changes.
 
 1. First choose the smallest planning layer that fits:
    - direct ticket -> `tech-impl-plan` for concrete one-loop work,
@@ -44,10 +45,14 @@ Copy and paste this into a new session to start a coding implementation planning
    - move to `tickets/building/` only after human approval,
    - spawn follow-up tickets in `tickets/todo/` when scope splits.
 17. For UI or autonomous workflows, decide the proof surface up front:
-   - open path,
-   - seed/reset path,
-   - inspect hook,
-   - assertion path,
-   - artifact destination.
+    - open path,
+    - seed/reset path,
+    - inspect hook,
+    - assertion path,
+    - artifact destination.
+18. For every ticket, name the primary test method up front:
+   - unit, integration, e2e, visual diff, runtime log assertion, eval, or mixed,
+   - why it is deterministic enough for this feature,
+   - which instrumentation work must exist first.
 
 IMPORTANT: Plan only. Do not implement.

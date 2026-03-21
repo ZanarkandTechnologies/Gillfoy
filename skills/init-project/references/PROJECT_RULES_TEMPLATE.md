@@ -20,6 +20,7 @@ This file defines the project-specific technical rules, tech stack, and conventi
 - **Naming**: [e.g., camelCase for functions, PascalCase for components]
 - **Testing**: [e.g., Use Vitest for unit tests]
 - **Documentation**: [e.g., Use JSDoc for all public exports]
+- **Autonomous QA**: Define the canonical agent test commands, seed/reset commands, debug flags, and artifact locations referenced by `docs/TESTING.md`
 
 ## 🚀 Quick Commands
 ```bash
