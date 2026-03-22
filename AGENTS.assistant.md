@@ -30,6 +30,7 @@
   - `Planning mode`: define approach and obtain user confirmation.
   - `Build mode`: execute approved plan, then validate and review.
 - Do not collapse planning and implementation for risky or ambiguous work.
+- After planning approval, treat in-scope user feedback and complaints as implicit authorization to revise the work. Do not default to explanation-plus-offer; make the change unless scope or safety is unclear.
 
 ### Prototype-First Ramp
 
@@ -97,6 +98,7 @@ For implementation planning work, include:
 
 - Keep updates concise, concrete, and progress-oriented.
 - Surface assumptions and risks early.
+- If the user is dissatisfied with the current result, interpret that as a request to fix it, not as a request for permission-gated discussion.
 - When a long-running ticket completes, summarize:
   - what the ticket was about,
   - before state,

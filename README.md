@@ -133,6 +133,7 @@ flowchart TD
    - output: implementation plan written into the ticket, with chat used only as a compact summary + approval ask
 5. build
    - implement the approved ticket from `tickets/building/`
+   - corrective user feedback during build is an in-scope change request by default, not a fresh approval checkpoint
    - output: code + tests + ticket updates
 6. `qa-tester` + `visual-qa`
    - verify behavior and UI against the ticket contract
