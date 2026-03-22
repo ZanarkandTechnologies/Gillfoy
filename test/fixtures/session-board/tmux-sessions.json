@@ -1,0 +1,24 @@
+{
+  "sessions": [
+    {
+      "name": "TKT-101-review-pass",
+      "attached": true,
+      "windows": 2
+    },
+    {
+      "name": "TKT-102-runtime-1",
+      "attached": false,
+      "windows": 1
+    },
+    {
+      "name": "TKT-102-runtime-2",
+      "attached": true,
+      "windows": 3
+    },
+    {
+      "name": "orphan-investigation",
+      "attached": false,
+      "windows": 1
+    }
+  ]
+}

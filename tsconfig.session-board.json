@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.json",
+  "include": [
+    "src/global.d.ts",
+    "src/session-board/**/*.ts",
+    "src/session-board-cli.ts",
+    "test/session-board*.ts"
+  ]
+}
