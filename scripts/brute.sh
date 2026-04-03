@@ -31,6 +31,8 @@ Ticket contract:
 - `## Runtime State` bullet fields
 - `## Review Findings`
 - `## Exit Reason`
+- `## Execution Proof`
+- `## Operator Resume`
 EOF
 }
 
@@ -65,6 +67,10 @@ resolve_ticket() {
   printf '%s\n' "$matches"
 }
 
+count_active_building_tickets() {
+  find "$ROOT/tickets/building" -maxdepth 1 -type f ! -name '.gitkeep' | sort
+}
+
 get_ticket_bullet() {
   local label="$1"
   local default_value="${2:-}"
@@ -89,6 +95,26 @@ set_ticket_bullet() {
     die "missing ticket label: $label\n" if $_ !~ $pattern;
     s/$pattern/- $label: $value/m;
   ' "$TICKET_PATH"
+}
+
+section_has_meaningful_content() {
+  local section="$1"
+
+  awk -v section="## $section" '
+    $0 == section { in_section=1; next }
+    in_section && /^## / { exit }
+    in_section {
+      line=$0
+      gsub(/^[[:space:]-]+/, "", line)
+      if (line == "" || line ~ /^<!--/ || line ~ /^```/) next
+      if (line ~ /^PASS \| FAIL \| NOT PROVABLE$/) next
+      if (line ~ /^CAPTURED \| MISSING$/) next
+      if (line ~ /^[A-Za-z0-9()\/ ,_-]+:[[:space:]]*$/) next
+      if (tolower(line) == "none" || tolower(line) == "not needed" || tolower(line) == "n/a") next
+      print "yes"
+      exit
+    }
+  ' "$TICKET_PATH" | grep -q yes
 }
 
 get_policy_scalar() {
@@ -306,6 +332,13 @@ TICKET_PATH="$(resolve_ticket "$TICKET_INPUT")"
 TICKET_ID="$(basename "$TICKET_PATH" | sed -n 's/^\(TKT-[0-9][0-9]*\).*/\1/p')"
 STATE_FILE="$STATE_ROOT/$TICKET_ID.json"
 
+BUILDING_TICKETS="$(count_active_building_tickets || true)"
+BUILDING_COUNT="$(printf '%s\n' "$BUILDING_TICKETS" | sed '/^$/d' | wc -l | tr -d ' ')"
+
+[[ "$TICKET_PATH" == "$ROOT"/tickets/building/* ]] || die "brute requires a ticket in tickets/building/"
+[[ "$BUILDING_COUNT" == "1" ]] || die "brute requires exactly one active ticket in tickets/building/"
+[[ "$BUILDING_TICKETS" == "$TICKET_PATH" ]] || die "selected ticket is not the sole active building ticket"
+
 MAX_ITERATIONS="${MAX_ITERATIONS:-$(get_policy_scalar max_iterations 5)}"
 MAX_REVIEW_LOOPS="$(get_policy_scalar max_review_loops 3)"
 CURRENT_PHASE="${PHASE_OVERRIDE:-$(get_ticket_bullet "current phase" "build")}"
@@ -383,6 +416,24 @@ case "$STATUS_VALUE" in
     fi
     ;;
   done)
+    if ! section_has_meaningful_content "Execution Proof"; then
+      CURRENT_PHASE="blocked"
+      EXIT_STATUS="blocked"
+      EXIT_DETAIL="missing_execution_proof"
+      break
+    fi
+    if ! section_has_meaningful_content "Operator Resume"; then
+      CURRENT_PHASE="blocked"
+      EXIT_STATUS="blocked"
+      EXIT_DETAIL="missing_operator_resume"
+      break
+    fi
+    if [[ "$(get_ticket_bullet "review status" "not-reviewed")" != "passed" ]]; then
+      CURRENT_PHASE="blocked"
+      EXIT_STATUS="blocked"
+      EXIT_DETAIL="review_not_marked_passed"
+      break
+    fi
     CURRENT_PHASE="done"
     EXIT_STATUS="done"
     EXIT_DETAIL="review_passed"

@@ -133,6 +133,7 @@ flowchart TD
    - output: implementation plan written into the ticket, with chat used only as a compact summary + approval ask
 5. build
    - implement the approved ticket from `tickets/building/`
+   - when using `brute`, there should be exactly one active building ticket for the run
    - corrective user feedback during build is an in-scope change request by default, not a fresh approval checkpoint
    - output: code + tests + ticket updates
 6. `qa-tester` + `visual-qa`
@@ -203,6 +204,7 @@ In practice:
 - non-UI tickets should carry an `Execution Proof` block for open/prove/inspect/artifact paths
 - UI-bearing tickets carry a compact `Agent Contract`
 - review-oriented automation should write findings into `Review Findings` and terminal status into `Exit Reason`
+- staged runners should keep an `Operator Resume` packet current for humans returning later
 - tickets carry minimal status/control fields for board movement, including `parallelizable after` when relevant
 - tickets end with a compact `User Evidence` packet for human review
 

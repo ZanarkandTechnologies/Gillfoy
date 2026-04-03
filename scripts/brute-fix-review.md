@@ -6,6 +6,7 @@ Fix-review phase for the active ticket.
    - `Build Notes`
    - `Execution Proof`
    - `Review Findings`
+   - `Operator Resume`
    - `Artifact Links`
 4. When fixes are ready for another review pass, end with:
    `BRUTE_RESULT: status=ready_for_review next=review`

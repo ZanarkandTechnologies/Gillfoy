@@ -82,6 +82,11 @@ For implementation planning work, include:
   - agent or skill,
   - one-line reason,
   - expected output artifact.
+- Prefer ticket-file-first delegation:
+  - create or select the work item first,
+  - pass the file path/reference as the primary contract,
+  - keep freeform prompt text secondary,
+  - require the delegated worker to write progress back into that same file.
 
 ---
 
@@ -91,10 +96,26 @@ For implementation planning work, include:
 - Validate with project backpressure checks (tests, lint, typecheck, build).
 - For UI-affecting changes, include visual verification artifacts.
 - Keep docs state accurate (`docs/progress.md`, `docs/HISTORY.md`, `docs/MEMORY.md` when applicable).
+- Prefer explicit state movement for work items:
+  - backlog -> planning/review -> approved build -> done
+  - keep blockers in the work item,
+  - split overflow scope into follow-up work items instead of hiding it in prose.
 
 ---
 
-## 6) Communication Contract
+## 6) Operational Memory
+
+- Keep append-only execution history separate from curated durable constraints.
+- Log repeated misses or user corrections in a raw feedback surface first.
+- Promote only stable lessons into the durable memory or contract layer.
+- If you introduce a new invariant:
+  - update durable memory,
+  - update the nearest assistant/agent contract,
+  - reference it in code when applicable.
+
+---
+
+## 7) Communication Contract
 
 - Keep updates concise, concrete, and progress-oriented.
 - Surface assumptions and risks early.
@@ -106,7 +127,7 @@ For implementation planning work, include:
 
 ---
 
-## 7) Stop Conditions
+## 8) Stop Conditions
 
 Pause and ask for clarification when:
 

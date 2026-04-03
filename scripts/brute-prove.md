@@ -6,6 +6,7 @@ Proof phase for the active ticket.
    - `Build Notes`
    - `Execution Proof`
    - `Artifact Links`
+   - `Operator Resume`
    - `QA Reconciliation` when proof materially changes it
 4. If proof fails because more in-scope implementation work is required, document it and end with:
    `BRUTE_RESULT: status=continue_build next=build`
@@ -13,3 +14,4 @@ Proof phase for the active ticket.
    `BRUTE_RESULT: status=ready_for_review next=review`
 6. If proof reveals a blocker that should stop the loop, document it and end with:
    `BRUTE_RESULT: status=blocked next=none reason=<snake_case_reason>`
+7. Classify blockers explicitly as scope blocker vs execution blocker in the ticket write-back.

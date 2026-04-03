@@ -6,6 +6,7 @@ Build phase for the active ticket.
    - `Build Notes`
    - `Execution Proof`
    - `Artifact Links`
+   - `Operator Resume`
    - `Runtime State` if the phase meaningfully changes
 4. If more in-scope implementation work remains for a fresh loop, end with:
    `BRUTE_RESULT: status=continue_build next=build`
@@ -13,3 +14,4 @@ Build phase for the active ticket.
    `BRUTE_RESULT: status=ready_for_prove next=prove`
 6. If you hit a real blocker, document it in the ticket and end with:
    `BRUTE_RESULT: status=blocked next=none reason=<snake_case_reason>`
+7. If the blocker is scope ambiguity rather than execution failure, write that distinction explicitly in the ticket instead of disguising it as a build failure.

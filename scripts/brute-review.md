@@ -4,11 +4,13 @@ Review phase for the active ticket.
 2. Write findings into the ticket:
    - `Review Findings`
    - `QA Reconciliation`
+   - `Operator Resume`
    - `Artifact Links` when needed
 3. Mark findings as in-scope fixes vs follow-up material where possible.
-4. If review passes cleanly, end with:
+4. Only pass review if the ticket has enough proof and resume context for a human to understand what happened quickly.
+5. If review passes cleanly, end with:
    `BRUTE_RESULT: status=done next=none`
-5. If review finds in-scope issues that should be fixed now, end with:
+6. If review finds in-scope issues that should be fixed now, end with:
    `BRUTE_RESULT: status=review_failed next=fix-review findings=<count>`
-6. If review finds a real blocker or out-of-scope issue that should stop the loop, document it and end with:
+7. If review finds a real blocker or out-of-scope issue that should stop the loop, document it and end with:
    `BRUTE_RESULT: status=blocked next=none reason=<snake_case_reason>`
